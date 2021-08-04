@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_details"
+            android:icon="@drawable/ic_profile"
+            android:title="Details" />
+
+        <item android:id="@+id/nav_users"
+            android:icon="@drawable/ic_profile"
+            android:title="Users" />
+
+        <item android:id="@+id/nav_servers"
+            android:icon="@drawable/ic_profile"
+            android:title="Servers" />
+
+        <item android:id="@+id/nav_configs"
+            android:icon="@drawable/ic_profile"
+            android:title="Configs" />
+
+        <item android:id="@+id/nav_codes"
+            android:icon="@drawable/ic_profile"
+            android:title="Promo codes" />
+
+        <item android:id="@+id/nav_affiliate"
+            android:icon="@drawable/ic_profile"
+            android:title="Affiliates" />
+
+        <item android:id="@+id/nav_news"
+            android:icon="@drawable/ic_profile"
+            android:title="News" />
+
+        <item android:id="@+id/nav_invoices"
+            android:icon="@drawable/ic_profile"
+            android:title="Invoices" />
+        <item android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_profile"
+            android:title="Logout" />
+    </group>
+
+
+    <item android:title="Tools">
+        <menu>
+            <item android:id="@+id/nav_share"
+                android:icon="@drawable/ic_profile"
+                android:title="Share" />
+            <item android:id="@+id/nav_send"
+                android:icon="@drawable/ic_profile"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>

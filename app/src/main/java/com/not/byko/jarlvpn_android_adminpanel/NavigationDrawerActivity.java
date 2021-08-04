@@ -1,5 +1,6 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,11 +11,18 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.not.byko.jarlvpn_android_adminpanel.fragments.DetailsFragment;
+import com.not.byko.jarlvpn_android_adminpanel.fragments.ServersFragment;
 
 public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private DrawerLayout drawerLayout;
+    private static TextView username_admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,14 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                     new DetailsFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_details);
         }
+
+        Intent thisIntent = getIntent();
+        //get element from header layout
+        View nav_header = navigationView.getHeaderView(0);
+        username_admin = nav_header.findViewById(R.id.username_label);
+
+        username_admin.setText(thisIntent.getStringExtra("username"));
+
     }
 
     @Override
@@ -54,6 +70,19 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        switch (menuItem.getItemId()){
+            case R.id.nav_details:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new DetailsFragment()).commit();
+                break;
+            case R.id.nav_servers:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ServersFragment()).commit();
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+
         return true;
     }
 }

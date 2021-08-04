@@ -15,8 +15,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.not.byko.jarlvpn_android_adminpanel.fragments.AffiliateFragment;
+import com.not.byko.jarlvpn_android_adminpanel.fragments.ConfigsFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.DetailsFragment;
+import com.not.byko.jarlvpn_android_adminpanel.fragments.InvoicesFragment;
+import com.not.byko.jarlvpn_android_adminpanel.fragments.NewsFragment;
+import com.not.byko.jarlvpn_android_adminpanel.fragments.PromoCodesFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.ServersFragment;
+import com.not.byko.jarlvpn_android_adminpanel.fragments.UsersFragment;
 
 public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,9 +82,36 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new DetailsFragment()).commit();
                 break;
+            case R.id.nav_users:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new UsersFragment()).commit();
+                break;
             case R.id.nav_servers:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ServersFragment()).commit();
+                break;
+            case R.id.nav_configs:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ConfigsFragment()).commit();
+                break;
+            case R.id.nav_codes:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new PromoCodesFragment()).commit();
+                break;
+            case R.id.nav_affiliate:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new AffiliateFragment()).commit();
+                break;
+            case R.id.nav_news:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new NewsFragment()).commit();
+                break;
+            case R.id.nav_invoices:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new InvoicesFragment()).commit();
+                break;
+            case R.id.nav_logout:
+                //tu bedzie logout xd
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

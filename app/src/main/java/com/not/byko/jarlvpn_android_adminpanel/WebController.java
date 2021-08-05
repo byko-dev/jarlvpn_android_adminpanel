@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.widget.ArrayAdapter;
+
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.UsersList;
@@ -20,6 +22,7 @@ public class WebController {
     private static long expireTokenDate = 0;
 
     private RestTemplate restTemplate = new RestTemplate();
+
 
     public HttpHeaders authorizedHeader(){
         HttpHeaders headers = new HttpHeaders();

@@ -117,7 +117,10 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                         new InvoicesFragment()).commit();
                 break;
             case R.id.nav_logout:
-                //tu bedzie logout xd
+                WebController.logout();
+                setContentView(R.layout.activity_main);
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

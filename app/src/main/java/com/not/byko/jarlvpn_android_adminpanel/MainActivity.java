@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
         if (webController.loginToAdminPanel(login.getText().toString(),password.getText().toString())){
             setContentView(R.layout.activity_navigation_drawer);
             Intent intent = new Intent(MainActivity.this, NavigationDrawerActivity.class);
-            intent.putExtra("username", login.getText().toString());            startActivity(intent);
+            intent.putExtra("username", login.getText().toString());
+            startActivity(intent);
         }else{
             Toast.makeText(view.getContext(), "Password or login wrong!", Toast.LENGTH_LONG).show();
         }

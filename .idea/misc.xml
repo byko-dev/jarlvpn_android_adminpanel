@@ -4,12 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/bykop/AppData/Local/Android/Sdk/platforms/android-30/data/res/layout/simple_list_item_1.xml" value="0.22735507246376813" />
+        <entry key="..\:/Users/bykop/AppData/Local/Android/Sdk/platforms/android-30/data/res/layout/simple_list_item_2.xml" value="0.21422101449275363" />
         <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/activity_main.xml" value="0.23369565217391305" />
         <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/activity_navigation_drawer.xml" value="0.22735507246376813" />
         <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/affiliate_fragment.xml" value="0.22735507246376813" />
         <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/configs_fragment.xml" value="0.22735507246376813" />
         <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/details_fragment.xml" value="0.22735507246376813" />
         <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/invoices_fragment.xml" value="0.22735507246376813" />
+        <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/list_view_description.xml" value="0.21422101449275363" />
         <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/nav_header.xml" value="0.22735507246376813" />
         <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/navigation_activity.xml" value="0.23369565217391305" />
         <entry key="..\:/Workspace/AndroidStudio/jarlvpn_android_adminpanel/app/src/main/res/layout/news.xml" value="0.22735507246376813" />

@@ -55,10 +55,6 @@ public class DetailsFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-
-
-        WebController webController = new WebController();
-
         MenuItem menuItem = menu.findItem(R.id.search_icon);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setQueryHint("Search Here!");

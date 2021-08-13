@@ -2,7 +2,7 @@ package com.not.byko.jarlvpn_android_adminpanel.models;
 
 public class DiscountCode {
 
-    public Integer Id;
+    public String Id;
     public String code;
     public Integer percentage;
     public Integer usedTimes;
@@ -12,7 +12,7 @@ public class DiscountCode {
 
     public DiscountCode(){}
 
-    public DiscountCode(Integer id, String code, Integer percentage, Integer usedTimes, String plan, Integer billing, String ownerId) {
+    public DiscountCode(String id, String code, Integer percentage, Integer usedTimes, String plan, Integer billing, String ownerId) {
         Id = id;
         this.code = code;
         this.percentage = percentage;
@@ -22,11 +22,11 @@ public class DiscountCode {
         this.ownerId = ownerId;
     }
 
-    public Integer getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         Id = id;
     }
 

@@ -1,12 +1,10 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
-import android.widget.ArrayAdapter;
-
 import com.not.byko.jarlvpn_android_adminpanel.models.DiscountCode;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginResponse;
-import com.not.byko.jarlvpn_android_adminpanel.models.Root;
-import com.not.byko.jarlvpn_android_adminpanel.models.UsersList;
+import com.not.byko.jarlvpn_android_adminpanel.models.NewsListResponse;
+import com.not.byko.jarlvpn_android_adminpanel.models.ServersListResponse;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,6 +21,8 @@ public class WebController {
 
     private static String jwtToken = "";
     private static long expireTokenDate = 0;
+
+    private String backend_api = "http://10.0.2.2:8080/api";
 
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -42,7 +43,7 @@ public class WebController {
 
         HttpEntity<LoginRequest> httpEntity = new HttpEntity<LoginRequest>(loginRequest, headers);
 
-        ResponseEntity<LoginResponse> response = restTemplate.exchange("http://10.0.2.2:8080/login",
+        ResponseEntity<LoginResponse> response = restTemplate.exchange(backend_api + "/adminpanel/login",
                 HttpMethod.POST, httpEntity, LoginResponse.class);
 
         if(response.getStatusCode().is2xxSuccessful()){
@@ -60,10 +61,10 @@ public class WebController {
         if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
             HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
 
-            ResponseEntity<UsersList> responseEntity = restTemplate.exchange("http://10.0.2.2:8080/users",
-                    HttpMethod.GET, entity, UsersList.class);
+            ResponseEntity<String[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutboard",
+                    HttpMethod.POST, entity, String[].class);
 
-            return responseEntity.getBody().getUsers();
+            return Arrays.asList(responseEntity.getBody().clone());
 
         }else{
             //redirect to login panel
@@ -75,14 +76,42 @@ public class WebController {
         if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
             HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
 
-            ResponseEntity<Root> responseEntity = restTemplate.exchange("http://10.0.2.2:8080/promocodes",
-                    HttpMethod.GET, entity, Root.class);
-            return responseEntity.getBody().getDiscountCodeList();
+            ResponseEntity<DiscountCode[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/discountlist",
+                    HttpMethod.GET, entity, DiscountCode[].class);
+            return Arrays.asList(responseEntity.getBody());
         }else{
             //redirect to login panel
         }
         return Collections.emptyList();
     }
+
+    public List<NewsListResponse> getNewsList(){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+
+            ResponseEntity<NewsListResponse[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/allnews",
+                    HttpMethod.GET, entity, NewsListResponse[].class);
+            return Arrays.asList(responseEntity.getBody());
+        }else{
+            //redirect to login panel or something
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<ServersListResponse> getServerList(){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+
+            ResponseEntity<ServersListResponse[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutboard/jarlservers",
+                    HttpMethod.GET, entity, ServersListResponse[].class);
+            return Arrays.asList(responseEntity.getBody());
+        }else{
+            //something
+        }
+        return Collections.emptyList();
+    }
+
 
 
 

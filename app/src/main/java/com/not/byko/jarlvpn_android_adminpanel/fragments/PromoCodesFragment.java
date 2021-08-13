@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.SearchableAdapter;
 import com.not.byko.jarlvpn_android_adminpanel.WebController;
+import com.not.byko.jarlvpn_android_adminpanel.models.DiscountCode;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginRequest;
 
 import java.util.ArrayList;
@@ -42,15 +43,10 @@ public class PromoCodesFragment extends Fragment {
         List<String> titles = new ArrayList<>();
         List<String> description = new ArrayList<>();
 
-        //for (DiscountCode discountCode : webController.getDiscountCodeList()){
-        //    titles.add(discountCode.getCode());
-        //    description.add(discountCode.getPercentage().toString());
-        //}
-
-        titles.add("RADARA");
-        description.add("13");
-        titles.add("JARLVPN");
-        description.add("4");
+        for(DiscountCode discountCode : webController.getDiscountCodeList()){
+            titles.add(discountCode.getCode());
+            description.add(discountCode.getPercentage().toString());
+        }
 
         searchableAdapter = new SearchableAdapter(getActivity(), titles, description);
 

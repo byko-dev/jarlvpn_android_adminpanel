@@ -12,10 +12,11 @@ public class ServersListResponse {
     private String hosting;
     private String ownerEmail;
     private String passphrase;
+    private String status;
 
     public ServersListResponse(String id, String ipAddress, String createDate, String expDate,
                                String userExpDate, String serverCity, String serverCountry,
-                               String hosting, String ownerEmail, String passphrase) {
+                               String hosting, String ownerEmail, String passphrase, String status) {
         this.id = id;
         this.ipAddress = ipAddress;
         this.createDate = createDate;
@@ -26,6 +27,7 @@ public class ServersListResponse {
         this.hosting = hosting;
         this.ownerEmail = ownerEmail;
         this.passphrase = passphrase;
+        this.status = status;
     }
 
     public ServersListResponse(){}
@@ -108,5 +110,13 @@ public class ServersListResponse {
 
     public void setPassphrase(String passphrase) {
         this.passphrase = passphrase;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

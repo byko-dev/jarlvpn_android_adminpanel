@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.WebController;
+import com.not.byko.jarlvpn_android_adminpanel.models.WebConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +31,6 @@ public class DetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.details_fragment, container, false);
     }
@@ -41,36 +41,40 @@ public class DetailsFragment extends Fragment {
 
         WebController webController = new WebController();
 
-        List<String> list = new ArrayList<>();
 
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, webController.getUsersList());
+        TextView totalUsers = getView().findViewById(R.id.textView4);
+        TextView totalServers = getView().findViewById(R.id.textView5);
+        TextView paypalInvoices = getView().findViewById(R.id.textView6);
+        TextView cryptoInvoices = getView().findViewById(R.id.textView7);
+        TextView oneMonthPrice = getView().findViewById(R.id.textView8);
+        TextView sixMonthsDiscount = getView().findViewById(R.id.textView9);
+        TextView unusedServers = getView().findViewById(R.id.textView10);
+        TextView paidPaypal = getView().findViewById(R.id.textView11);
+        TextView paidCrypto = getView().findViewById(R.id.textView12);
+        TextView todayUsers = getView().findViewById(R.id.textView13);
+        TextView todayPaypal = getView().findViewById(R.id.textView14);
+        TextView todayCrypto = getView().findViewById(R.id.textView15);
 
-        ListView listView = getView().findViewById(R.id.details_listView);
+        WebConfig webConfig = webController.getDetails();
 
-        listView.setAdapter(arrayAdapter);
-
+        totalUsers.setText("Total registered users: " + webConfig.getTotalUsers());
+        totalServers.setText("Total JarlVPN servers: " + webConfig.getTotalServers());
+        unusedServers.setText("Unused JarlVPN servers: " + webConfig.getUnusedServers());
+        paypalInvoices.setText("Total created paypal invoices: " + webConfig.getTotalPaypalInvoices());
+        paidPaypal.setText("Total paid paypal invoices: " + webConfig.getSuccessInvoicesPaypal());
+        cryptoInvoices.setText("Total created crypto invoices: " + webConfig.getTotalCryptoInvoices());
+        paidCrypto.setText("Total paid crypto invoices: " + webConfig.getSuccessInvoicesCrypto());
+        oneMonthPrice.setText("One month price: " + webConfig.getOneMonthPrice());
+        sixMonthsDiscount.setText("Six months discount: " + webConfig.getSixMonthDiscount());
+        todayUsers.setText("Today users registered: " + webConfig.getTodayUsersRegistered());
+        todayPaypal.setText("Today paypal invoices created: " + webConfig.getTodayPaypalInvoices());
+        todayCrypto.setText("Today crypto invoices created: " + webConfig.getTodayCryptoInvoices());
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
         MenuItem menuItem = menu.findItem(R.id.search_icon);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Search Here!");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                arrayAdapter.getFilter().filter(newText);
-
-                return true;
-            }
-        });
+        menuItem.setVisible(false);
     }
-} //onCreateOptionsMenu
+}

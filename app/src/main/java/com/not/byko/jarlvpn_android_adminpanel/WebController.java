@@ -1,10 +1,12 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import com.not.byko.jarlvpn_android_adminpanel.models.Configs;
 import com.not.byko.jarlvpn_android_adminpanel.models.DiscountCode;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.NewsListResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.ServersListResponse;
+import com.not.byko.jarlvpn_android_adminpanel.models.WebConfig;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -113,12 +115,34 @@ public class WebController {
     }
 
 
+    public WebConfig getDetails(){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
 
+            ResponseEntity<WebConfig> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutconfig",
+                    HttpMethod.GET, entity, WebConfig.class);
+            return responseEntity.getBody();
+        }else{
+            //something
+        }
+        return new WebConfig();
+    }
 
+    public List<Configs> getWireGuardConfigurations(){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+
+            ResponseEntity<Configs[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/allconfigs",
+                    HttpMethod.GET, entity, Configs[].class);
+            return Arrays.asList(responseEntity.getBody());
+        }else{
+            //something
+        }
+        return Collections.emptyList();
+    }
 
     public static void logout(){
         jwtToken = "";
         expireTokenDate = 0;
     }
-
 }

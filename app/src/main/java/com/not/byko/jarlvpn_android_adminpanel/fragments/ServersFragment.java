@@ -19,6 +19,7 @@ import com.not.byko.jarlvpn_android_adminpanel.WebController;
 import com.not.byko.jarlvpn_android_adminpanel.models.ServersListResponse;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ServersFragment extends Fragment {
@@ -44,7 +45,8 @@ public class ServersFragment extends Fragment {
         List<Integer> serverCountryImageCode = new ArrayList<>();
 
         for(ServersListResponse serversListResponse : webController.getServerList()){
-            serverIP.add(serversListResponse.getIpAddress());
+            serverIP.add(serversListResponse.getIpAddress() +
+                    (serversListResponse.getOwnerEmail().isEmpty() ? "" : " / " + serversListResponse.getOwnerEmail()));
             serverCountryImageCode.add(R.drawable.nl_flag);
         }
 

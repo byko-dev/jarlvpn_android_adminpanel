@@ -1,5 +1,6 @@
 package com.not.byko.jarlvpn_android_adminpanel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,9 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 
+import com.not.byko.jarlvpn_android_adminpanel.CreateNewsActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.SearchableAdapter;
 import com.not.byko.jarlvpn_android_adminpanel.WebController;
@@ -53,6 +56,16 @@ public class NewsFragment extends Fragment {
 
         ListView listView = getView().findViewById(R.id.news_listView);
         listView.setAdapter(searchableAdapter);
+
+        Button createNewNews = getView().findViewById(R.id.button9);
+        createNewNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreateNewsActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 

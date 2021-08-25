@@ -69,7 +69,7 @@ public class WebController {
             HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
 
             ResponseEntity<String[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutboard",
-                    HttpMethod.POST, entity, String[].class);
+                    HttpMethod.GET, entity, String[].class);
 
             return Arrays.asList(responseEntity.getBody().clone());
 
@@ -190,6 +190,21 @@ public class WebController {
         }
         return new StatusModel();
     }
+
+    public List<String> getAffiliates(){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+
+            ResponseEntity<String[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/affiliate/list",
+                    HttpMethod.GET, entity, String[].class);
+
+            return Arrays.asList(responseEntity.getBody());
+        }else{
+            //something
+        }
+        return Collections.emptyList();
+    }
+
 
 
 

@@ -1,5 +1,6 @@
 package com.not.byko.jarlvpn_android_adminpanel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,9 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.not.byko.jarlvpn_android_adminpanel.PromoCodeActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.SearchableAdapter;
 import com.not.byko.jarlvpn_android_adminpanel.WebController;
@@ -26,6 +30,7 @@ import java.util.List;
 public class PromoCodesFragment extends Fragment {
 
     private SearchableAdapter searchableAdapter;
+    private ListView listView;
 
     @Nullable
     @Override
@@ -37,25 +42,57 @@ public class PromoCodesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         WebController webController = new WebController();
 
         List<String> titles = new ArrayList<>();
         List<String> description = new ArrayList<>();
+        List<DiscountCode> discountCodeList = webController.getDiscountCodeList();
 
-        for(DiscountCode discountCode : webController.getDiscountCodeList()){
+        for(DiscountCode discountCode : discountCodeList){
             titles.add(discountCode.getCode());
             description.add(discountCode.getPercentage().toString());
         }
 
         searchableAdapter = new SearchableAdapter(getActivity(), titles, description);
 
-        ListView listView = getView().findViewById(R.id.code_listView);
+        listView = getView().findViewById(R.id.code_listView);
 
         listView.setAdapter(searchableAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), PromoCodeActivity.class);
+
+                intent.putExtra("code", discountCodeList.get(position).getCode());
+                intent.putExtra("percentage", String.valueOf(discountCodeList.get(position).getPercentage()));
+                intent.putExtra("id", discountCodeList.get(position).getId());
+                intent.putExtra("ownerId", discountCodeList.get(position).getOwnerId());
+                intent.putExtra("usedTimes", String.valueOf(discountCodeList.get(position).getUsedTimes()));
+                intent.putExtra("plan", discountCodeList.get(position).getPlan());
+                intent.putExtra("billing", translateBillingCode(discountCodeList.get(position).getBilling()));
+
+                startActivity(intent);
+            }
+        });
     }
 
-
+    private String translateBillingCode(Integer billing){
+        switch(billing){
+            case -1:
+                return "All";
+            case 1:
+                return billing.toString() + " Month";
+            default:
+                return billing.toString() + " Months";
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

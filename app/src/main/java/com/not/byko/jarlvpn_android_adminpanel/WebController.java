@@ -1,11 +1,16 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import com.not.byko.jarlvpn_android_adminpanel.models.ChangeConfigRequest;
+import com.not.byko.jarlvpn_android_adminpanel.models.ConfigRequest;
+import com.not.byko.jarlvpn_android_adminpanel.models.ConfigResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.Configs;
+import com.not.byko.jarlvpn_android_adminpanel.models.DeleteCodeRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.DiscountCode;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.NewsListResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.ServersListResponse;
+import com.not.byko.jarlvpn_android_adminpanel.models.StatusModel;
 import com.not.byko.jarlvpn_android_adminpanel.models.WebConfig;
 
 import org.springframework.http.HttpEntity;
@@ -140,6 +145,54 @@ public class WebController {
         }
         return Collections.emptyList();
     }
+
+    public ConfigResponse getConfigContent(String usernameId, String configName){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)) {
+            ConfigRequest configRequest = new ConfigRequest(usernameId, configName);
+
+            HttpEntity<ConfigRequest> entity = new HttpEntity<ConfigRequest>( configRequest, authorizedHeader());
+
+            ResponseEntity<ConfigResponse> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/download",
+                    HttpMethod.POST, entity, ConfigResponse.class);
+
+            return responseEntity.getBody();
+        }else{
+            //something
+        }
+        return new ConfigResponse();
+    }
+
+    public StatusModel deleteCode(String code){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            DeleteCodeRequest deleteCodeRequest = new DeleteCodeRequest(code);
+
+            HttpEntity<DeleteCodeRequest> entity = new HttpEntity<DeleteCodeRequest>( deleteCodeRequest, authorizedHeader());
+
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/delete/discountcode",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else{
+            //something
+        }
+        return new StatusModel();
+    }
+
+    public StatusModel setGutConfig(Float oneMonthPrice, Integer sixMonthsDiscount){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            ChangeConfigRequest changeConfigRequest = new ChangeConfigRequest(oneMonthPrice, sixMonthsDiscount);
+
+            HttpEntity<ChangeConfigRequest> entity = new HttpEntity<ChangeConfigRequest>(changeConfigRequest, authorizedHeader());
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutconfig",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else{
+            //something
+        }
+        return new StatusModel();
+    }
+
+
+
 
     public static void logout(){
         jwtToken = "";

@@ -33,7 +33,9 @@ public class CreateNewsActivity extends AppCompatActivity {
     }
 
     public void createNewNews(View view){
-        Toast.makeText(view.getContext(), editText.getText(), Toast.LENGTH_SHORT).show();
+        WebController webController = new WebController();
+        Toast.makeText(view.getContext(),
+                webController.createNews(editText.getText().toString()).getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     public void backToNews(View view){

@@ -1,5 +1,6 @@
 package com.not.byko.jarlvpn_android_adminpanel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.not.byko.jarlvpn_android_adminpanel.ImageAdapter;
 import com.not.byko.jarlvpn_android_adminpanel.R;
+import com.not.byko.jarlvpn_android_adminpanel.ServerActivity;
 import com.not.byko.jarlvpn_android_adminpanel.WebController;
 import com.not.byko.jarlvpn_android_adminpanel.models.ServersListResponse;
 
@@ -43,8 +46,9 @@ public class ServersFragment extends Fragment {
 
         List<String> serverIP = new ArrayList<>();
         List<Integer> serverCountryImageCode = new ArrayList<>();
+        List<ServersListResponse> servers = webController.getServerList();
 
-        for(ServersListResponse serversListResponse : webController.getServerList()){
+        for(ServersListResponse serversListResponse : servers){
             serverIP.add(serversListResponse.getIpAddress() +
                     (serversListResponse.getOwnerEmail().isEmpty() ? "" : " / " + serversListResponse.getOwnerEmail()));
             serverCountryImageCode.add(R.drawable.nl_flag);
@@ -54,6 +58,26 @@ public class ServersFragment extends Fragment {
 
         ListView listView = getView().findViewById(R.id.server_listView);
         listView.setAdapter(imageAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getActivity(), ServerActivity.class);
+                intent.putExtra("ipAddress", servers.get(position).getIpAddress());
+                intent.putExtra("serverCity", servers.get(position).getServerCity());
+                intent.putExtra("serverCountry", servers.get(position).getServerCountry());
+                intent.putExtra("status", servers.get(position).getStatus());
+                intent.putExtra("ownerEmail", servers.get(position).getOwnerEmail());
+                intent.putExtra("createDate", servers.get(position).getCreateDate());
+                intent.putExtra("expDate", servers.get(position).getExpDate());
+                intent.putExtra("userExpDate", servers.get(position).getUserExpDate());
+                intent.putExtra("hosting", servers.get(position).getHosting());
+                intent.putExtra("passphrase", servers.get(position).getPassphrase());
+                intent.putExtra("id", servers.get(position).getId());
+                startActivity(intent);
+            }
+        });
+
     }
 
 

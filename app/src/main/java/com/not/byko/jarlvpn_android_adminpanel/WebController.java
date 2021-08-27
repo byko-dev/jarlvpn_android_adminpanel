@@ -4,6 +4,7 @@ import com.not.byko.jarlvpn_android_adminpanel.models.ChangeConfigRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.Configs;
+import com.not.byko.jarlvpn_android_adminpanel.models.CreateNewsRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.DeleteCodeRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.DiscountCode;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginRequest;
@@ -203,6 +204,22 @@ public class WebController {
             //something
         }
         return Collections.emptyList();
+    }
+
+    public StatusModel createNews(String newsContent){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            CreateNewsRequest createNewsRequest = new CreateNewsRequest(newsContent);
+
+            HttpEntity<CreateNewsRequest> entity = new HttpEntity<CreateNewsRequest>(createNewsRequest, authorizedHeader());
+
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/create/news",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else{
+            //something
+        }
+
+        return new StatusModel();
     }
 
 

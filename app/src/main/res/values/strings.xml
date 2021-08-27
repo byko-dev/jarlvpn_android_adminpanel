@@ -2,4 +2,20 @@
     <string name="app_name">JarlVPN</string>
     <string name="navigation_drawer_open">Open navigation drawer </string>
     <string name="navigation_drawer_close"> Close navigation drawer</string>
+
+    <string-array name="billing_spinner">
+        <item>1 Month</item>
+        <item>2 Months</item>
+        <item>3 Months</item>
+        <item>4 Months</item>
+        <item>5 Months</item>
+        <item>All</item>
+    </string-array>
+
+    <string-array name="plan_spinner">
+        <item>personal</item>
+        <item>extend</item>
+        <item>all</item>
+    </string-array>
+
 </resources>

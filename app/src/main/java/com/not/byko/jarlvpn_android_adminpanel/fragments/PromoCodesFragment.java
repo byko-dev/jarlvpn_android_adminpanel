@@ -14,9 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.not.byko.jarlvpn_android_adminpanel.CreateDiscountCodeActivity;
+import com.not.byko.jarlvpn_android_adminpanel.CreateNewsActivity;
 import com.not.byko.jarlvpn_android_adminpanel.PromoCodeActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.SearchableAdapter;
@@ -81,6 +84,18 @@ public class PromoCodesFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        Button button = getView().findViewById(R.id.button7);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreateDiscountCodeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private String translateBillingCode(Integer billing){

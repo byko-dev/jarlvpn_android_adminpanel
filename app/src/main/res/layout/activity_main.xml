@@ -84,16 +84,33 @@
             android:onClick="onClickEvent"
             android:textColorLink="@color/purple_700" />
 
-        <CheckBox
-            android:id="@+id/checkBox"
+
+        <LinearLayout android:layout_height="48dp"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:allowUndo="false"
-            android:text="Save credentials"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            tools:text="Save credentials" />
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:allowUndo="false"
+                android:text="Save credentials"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                tools:text="Save credentials" />
+
+            <CheckBox
+                android:id="@+id/checkBox33"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:allowUndo="false"
+                android:text="Captacha"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/imageView16"

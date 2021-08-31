@@ -4,10 +4,12 @@ public class LoginRequest {
 
     private String username;
     private String password;
+    private String responseCaptacha;
 
-    public LoginRequest(String username, String password){
+    public LoginRequest(String username, String password, String responseCaptacha){
         this.username = username;
         this.password = password;
+        this.responseCaptacha = responseCaptacha;
     }
 
     public LoginRequest(){}
@@ -28,5 +30,11 @@ public class LoginRequest {
         this.password = password;
     }
 
+    public String getResponseCaptacha() {
+        return responseCaptacha;
+    }
 
+    public void setResponseCaptacha(String responseCaptacha) {
+        this.responseCaptacha = responseCaptacha;
+    }
 }

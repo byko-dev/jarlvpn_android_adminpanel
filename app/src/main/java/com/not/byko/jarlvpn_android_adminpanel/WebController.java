@@ -42,9 +42,9 @@ public class WebController {
         return headers;
     }
 
-    public Boolean loginToAdminPanel(String login, String password){
+    public Boolean loginToAdminPanel(String login, String password, String captcha){
 
-        LoginRequest loginRequest = new LoginRequest(login, password);
+        LoginRequest loginRequest = new LoginRequest(login, password, captcha);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));

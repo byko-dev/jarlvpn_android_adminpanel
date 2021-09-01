@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigResponse;
+import com.not.byko.jarlvpn_android_adminpanel.tools.Utils;
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -47,8 +49,8 @@ public class ConfigActivity extends AppCompatActivity {
         WebController webController = new WebController();
         ConfigResponse configResponse = webController.getConfigContent(usernameId, confNameStr);
 
-        saveConfigAsFile(view.getContext(), configResponse.getConfigName() + ".conf",
-                configResponse.getConfigContext());
+        Utils.saveConfigAsFile(view.getContext(), configResponse.getConfigName() + ".conf",
+                configResponse.getConfigContext(), "JarlVpnConfigs");
     }
 
     public void createQrCode(View view){
@@ -59,23 +61,7 @@ public class ConfigActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private void saveConfigAsFile(Context context, String fileName, String content){
-        try {
-            File root = new File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    "JarlVpnConfigs");
-            if (!root.exists()) {
-                root.mkdirs();
-            }
-            File gpxfile = new File(root, fileName);
-            FileWriter writer = new FileWriter(gpxfile);
-            writer.append(content);
-            writer.flush();
-            writer.close();
-            Toast.makeText(context, "Saved " + root.getAbsolutePath(), Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 
 

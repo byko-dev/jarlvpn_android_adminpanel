@@ -15,14 +15,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.not.byko.jarlvpn_android_adminpanel.ImageAdapter;
+import com.not.byko.jarlvpn_android_adminpanel.tools.ImageAdapter;
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.ServerActivity;
-import com.not.byko.jarlvpn_android_adminpanel.WebController;
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 import com.not.byko.jarlvpn_android_adminpanel.models.ServersListResponse;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ServersFragment extends Fragment {

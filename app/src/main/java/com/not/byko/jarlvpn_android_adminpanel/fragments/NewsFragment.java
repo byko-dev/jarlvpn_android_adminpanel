@@ -12,14 +12,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 
 import com.not.byko.jarlvpn_android_adminpanel.CreateNewsActivity;
+import com.not.byko.jarlvpn_android_adminpanel.DeleteNewsActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
-import com.not.byko.jarlvpn_android_adminpanel.SearchableAdapter;
-import com.not.byko.jarlvpn_android_adminpanel.WebController;
+import com.not.byko.jarlvpn_android_adminpanel.tools.SearchableAdapter;
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 import com.not.byko.jarlvpn_android_adminpanel.models.NewsListResponse;
 
 import java.util.ArrayList;
@@ -46,8 +48,10 @@ public class NewsFragment extends Fragment {
         List<String> newsContent = new ArrayList<>();
         List<String> newsDate = new ArrayList<>();
 
+        List<NewsListResponse> newsListResponseList = webController.getNewsList();
 
-        for(NewsListResponse newsListResponse: webController.getNewsList()){
+
+        for(NewsListResponse newsListResponse: newsListResponseList){
             newsDate.add(newsListResponse.getNewsDate());
             newsContent.add(newsListResponse.getNewsContent());
         }
@@ -66,6 +70,16 @@ public class NewsFragment extends Fragment {
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getActivity(), DeleteNewsActivity.class);
+                intent.putExtra("id", newsListResponseList.get(position).getNewsId());
+                intent.putExtra("newsContent", newsListResponseList.get(position).getNewsContent());
+                intent.putExtra("newsDate", newsListResponseList.get(position).getNewsDate());
+                startActivity(intent);
+            }
+        });
     }
 
 

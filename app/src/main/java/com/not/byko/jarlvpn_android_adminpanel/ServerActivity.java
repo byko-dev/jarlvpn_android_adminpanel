@@ -4,14 +4,26 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.not.byko.jarlvpn_android_adminpanel.models.DownloadPrivateKeyResponse;
+import com.not.byko.jarlvpn_android_adminpanel.tools.Utils;
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 
 public class ServerActivity extends AppCompatActivity {
+
+    private WebController webController;
+    private String ipAddress;
+    private boolean wipeWg = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
+
+        webController = new WebController();
 
         TextView serverIpTextView = findViewById(R.id.textView35);
         TextView expDateHostingTextView = findViewById(R.id.textView36);
@@ -21,10 +33,13 @@ public class ServerActivity extends AppCompatActivity {
         TextView statusTextView = findViewById(R.id.textView40);
         TextView hostingTextView = findViewById(R.id.textView41);
         TextView passphraseTextView = findViewById(R.id.textView42);
+        CheckBox wipeWgCheckBox = findViewById(R.id.checkBox2);
 
         Intent intent = getIntent();
 
-        serverIpTextView.setText("ServerIP: " + intent.getStringExtra("ipAddress"));
+        ipAddress = intent.getStringExtra("ipAddress");
+
+        serverIpTextView.setText("ServerIP: " + ipAddress);
         expDateHostingTextView.setText("Server expiry on hosting: " + intent.getStringExtra("expDate"));
         expDateUserTextView.setText("User rent expire: " + intent.getStringExtra("userExpDate"));
         ownerMailTextView.setText("Owner email: " + intent.getStringExtra("ownerEmail"));
@@ -37,10 +52,35 @@ public class ServerActivity extends AppCompatActivity {
         if(intent.getStringExtra("status").equals("OK"))
             statusTextView.setTextColor(getColor(R.color.green));
         else statusTextView.setTextColor(getColor(R.color.red));
+
+        wipeWgCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wipeWg = (!wipeWg);
+            }
+        });
     }
 
-    public void manageServer(View view){
+    public void resetServer(View view){
+        Toast.makeText(view.getContext(), webController.resetServer(ipAddress).getMessage(),
+                Toast.LENGTH_SHORT).show();
+    }
 
+    public void downloadPrivateKey(View view){
+        DownloadPrivateKeyResponse downloadPrivateKeyResponse = webController.downloadPPk(ipAddress);
+
+        Utils.saveConfigAsFile(view.getContext(), downloadPrivateKeyResponse.getFileNamePpk(),
+                downloadPrivateKeyResponse.getFileContentPpk(), "JarlVpnPrivateKeys");
+    }
+
+    public void refundServer(View view){
+        Toast.makeText(view.getContext(), webController.refundServer(ipAddress).getMessage(),
+                Toast.LENGTH_LONG).show();
+    }
+
+    public void deleteServer(View view){
+        Toast.makeText(view.getContext(), webController.deleteServer(ipAddress, wipeWg).getMessage(),
+                Toast.LENGTH_SHORT).show();
     }
 
     public void backToServers(View view){

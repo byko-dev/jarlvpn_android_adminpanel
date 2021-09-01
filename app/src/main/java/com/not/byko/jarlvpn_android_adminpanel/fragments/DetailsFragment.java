@@ -5,25 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.not.byko.jarlvpn_android_adminpanel.DetailsActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
-import com.not.byko.jarlvpn_android_adminpanel.WebController;
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 import com.not.byko.jarlvpn_android_adminpanel.models.WebConfig;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DetailsFragment extends Fragment {
 

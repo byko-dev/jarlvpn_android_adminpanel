@@ -15,8 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.not.byko.jarlvpn_android_adminpanel.R;
-import com.not.byko.jarlvpn_android_adminpanel.SearchableAdapter;
-import com.not.byko.jarlvpn_android_adminpanel.WebController;
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 
 public class AffiliateFragment extends Fragment {
 

@@ -1,4 +1,4 @@
-package com.not.byko.jarlvpn_android_adminpanel;
+package com.not.byko.jarlvpn_android_adminpanel.tools;
 
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangeConfigRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigRequest;
@@ -6,13 +6,18 @@ import com.not.byko.jarlvpn_android_adminpanel.models.ConfigResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.Configs;
 import com.not.byko.jarlvpn_android_adminpanel.models.CreateNewsRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.DeleteCodeRequest;
+import com.not.byko.jarlvpn_android_adminpanel.models.DeleteNewsRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.DiscountCode;
+import com.not.byko.jarlvpn_android_adminpanel.models.DownloadPrivateKeyResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.NewsListResponse;
+import com.not.byko.jarlvpn_android_adminpanel.models.RemoveServerRequest;
+import com.not.byko.jarlvpn_android_adminpanel.models.ResetServerRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ServersListResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.StatusModel;
 import com.not.byko.jarlvpn_android_adminpanel.models.WebConfig;
+import com.not.byko.jarlvpn_android_adminpanel.tools.Utils;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -30,7 +35,7 @@ public class WebController {
     private static String jwtToken = "";
     private static long expireTokenDate = 0;
 
-    private String backend_api = "http://10.0.2.2:8080/api";
+    private String backend_api = "https://jarlvpn.com/api";
 
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -221,6 +226,84 @@ public class WebController {
 
         return new StatusModel();
     }
+
+    public StatusModel deleteNews(String newsID){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            DeleteNewsRequest deleteNewsRequest = new DeleteNewsRequest(newsID);
+
+            HttpEntity<DeleteNewsRequest> entity = new HttpEntity<DeleteNewsRequest>(deleteNewsRequest, authorizedHeader());
+
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/delete/news",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else{
+            //do something
+        }
+        return new StatusModel();
+    }
+
+    public StatusModel resetServer(String ipAddress){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            ResetServerRequest resetServerRequest = new ResetServerRequest(ipAddress);
+
+            HttpEntity<ResetServerRequest> entity = new HttpEntity<ResetServerRequest>(resetServerRequest, authorizedHeader());
+
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/reset/server",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else{
+            //do something
+        }
+        return new StatusModel();
+    }
+
+    public DownloadPrivateKeyResponse downloadPPk(String ipAddress){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            ResetServerRequest resetServerRequest = new ResetServerRequest(ipAddress);
+
+            HttpEntity<ResetServerRequest> entity = new HttpEntity<ResetServerRequest>(resetServerRequest, authorizedHeader());
+
+            ResponseEntity<DownloadPrivateKeyResponse> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/privatekey/download",
+                    HttpMethod.POST, entity, DownloadPrivateKeyResponse.class);
+
+            return responseEntity.getBody();
+        }else{
+            //do something
+        }
+        return new DownloadPrivateKeyResponse();
+    }
+
+    public StatusModel refundServer(String ipAddress){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            ResetServerRequest resetServerRequest = new ResetServerRequest(ipAddress);
+
+            HttpEntity<ResetServerRequest> entity = new HttpEntity<ResetServerRequest>(resetServerRequest, authorizedHeader());
+
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/server/refund",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else{
+            //do something
+        }
+        return new StatusModel();
+    }
+
+    public StatusModel deleteServer(String ipAddress, boolean wipeWg){
+        if (Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            RemoveServerRequest removeServerRequest = new RemoveServerRequest(ipAddress, wipeWg);
+
+            HttpEntity<RemoveServerRequest> entity = new HttpEntity<RemoveServerRequest>(removeServerRequest, authorizedHeader());
+
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutboard/removejarlserver",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else{
+            //do nothing
+        }
+        return new StatusModel();
+    }
+
+
 
 
 

@@ -1,7 +1,5 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
-import static java.time.LocalDate.*;
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,10 +7,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
+
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Locale;
 
 public class CreateNewsActivity extends AppCompatActivity {
 

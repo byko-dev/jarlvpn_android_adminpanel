@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
+
 public class DetailsActivity extends AppCompatActivity {
 
     @Override

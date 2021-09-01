@@ -1,11 +1,9 @@
 package com.not.byko.jarlvpn_android_adminpanel.fragments;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -19,13 +17,12 @@ import android.widget.ListView;
 
 import com.not.byko.jarlvpn_android_adminpanel.ConfigActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
-import com.not.byko.jarlvpn_android_adminpanel.SearchableAdapter;
-import com.not.byko.jarlvpn_android_adminpanel.WebController;
+import com.not.byko.jarlvpn_android_adminpanel.tools.SearchableAdapter;
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 import com.not.byko.jarlvpn_android_adminpanel.models.Configs;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ConfigsFragment extends Fragment {
 

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Jarlvpn_android_adminpanel"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".DeleteNewsActivity"
+            android:exported="true" />
+        <activity
             android:name=".ServerActivity"
             android:exported="true" />
         <activity

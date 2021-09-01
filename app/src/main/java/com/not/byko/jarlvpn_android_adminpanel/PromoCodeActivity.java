@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
+
 public class PromoCodeActivity extends AppCompatActivity {
 
     private static String code;

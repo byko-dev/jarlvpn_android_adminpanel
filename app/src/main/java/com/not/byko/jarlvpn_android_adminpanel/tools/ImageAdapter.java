@@ -1,29 +1,32 @@
-package com.not.byko.jarlvpn_android_adminpanel;
+package com.not.byko.jarlvpn_android_adminpanel.tools;
 
 import android.content.Context;
+import android.graphics.drawable.Icon;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.not.byko.jarlvpn_android_adminpanel.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//Custom array adapter with title and description
-public class SearchableAdapter extends BaseAdapter implements Filterable {
+public class ImageAdapter extends BaseAdapter implements Filterable {
     private List<String> originalData = null;
     private List<String>filteredData = null;
-    private List<String> descriptionToData = null;
+    private List<Integer> image = null;
     private LayoutInflater mInflater;
     private ItemFilter mFilter = new ItemFilter();
 
-    public SearchableAdapter(Context context, List<String> data, List<String> descriptionToData) {
+    public ImageAdapter(Context context, List<String> data, List<Integer> image) {
         this.filteredData = data ;
         this.originalData = data ;
-        this.descriptionToData = descriptionToData;
+        this.image = image;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -40,12 +43,12 @@ public class SearchableAdapter extends BaseAdapter implements Filterable {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = mInflater.inflate(android.R.layout.simple_list_item_2, null, true);
-        TextView titleView = rowView.findViewById(android.R.id.text1);
-        TextView descriptionView = rowView.findViewById(android.R.id.text2);
+        View rowView = mInflater.inflate(R.layout.listview_images, null, true);
+        TextView titleView = rowView.findViewById(R.id.text1);
+        ImageView descriptionView = rowView.findViewById(R.id.icon);
 
         titleView.setText(filteredData.get(position));
-        descriptionView.setText(descriptionToData.get(position));
+        descriptionView.setImageResource(image.get(position));
 
         return rowView;
     }

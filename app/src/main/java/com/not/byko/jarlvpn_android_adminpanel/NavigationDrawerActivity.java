@@ -8,14 +8,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.not.byko.jarlvpn_android_adminpanel.fragments.AffiliateFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.ConfigsFragment;
@@ -25,6 +24,7 @@ import com.not.byko.jarlvpn_android_adminpanel.fragments.NewsFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.PromoCodesFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.ServersFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.UsersFragment;
+import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 
 public class NavigationDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -132,5 +132,10 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return false;
     }
 }

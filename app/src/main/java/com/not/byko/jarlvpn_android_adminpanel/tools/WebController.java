@@ -16,6 +16,8 @@ import com.not.byko.jarlvpn_android_adminpanel.models.RemoveServerRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ResetServerRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ServersListResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.StatusModel;
+import com.not.byko.jarlvpn_android_adminpanel.models.UserDetailsRequest;
+import com.not.byko.jarlvpn_android_adminpanel.models.UserDetailsResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.WebConfig;
 import com.not.byko.jarlvpn_android_adminpanel.tools.Utils;
 
@@ -298,6 +300,51 @@ public class WebController {
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
         }else{
+            //do nothing
+        }
+        return new StatusModel();
+    }
+
+    public UserDetailsResponse getUserDetails(String username){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+
+            HttpEntity<UserDetailsRequest> entity = new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+
+            ResponseEntity<UserDetailsResponse> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/password/details",
+                    HttpMethod.POST, entity,  UserDetailsResponse.class);
+            return responseEntity.getBody();
+        }else{
+            //do something
+        }
+        return new UserDetailsResponse();
+    }
+
+    public StatusModel blockUser(String username){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+
+            HttpEntity<UserDetailsRequest> entity = new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/password/block/user",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else{
+            //do nothing
+        }
+        return new StatusModel();
+    }
+
+    public StatusModel deleteUserAccount(String username){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+
+            HttpEntity<UserDetailsRequest> entity = new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/password/delete",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else {
             //do nothing
         }
         return new StatusModel();

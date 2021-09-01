@@ -1,5 +1,6 @@
 package com.not.byko.jarlvpn_android_adminpanel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.not.byko.jarlvpn_android_adminpanel.R;
+import com.not.byko.jarlvpn_android_adminpanel.UserActivity;
 import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 
 import java.util.ArrayList;
@@ -38,14 +41,23 @@ public class UsersFragment extends Fragment {
 
         WebController webController = new WebController();
 
-        List<String> list = new ArrayList<>();
-        list = webController.getUsersList();
+        List<String> list = webController.getUsersList();
 
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
 
         ListView listView = getView().findViewById(R.id.details_listView);
 
         listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(view.getContext(), UserActivity.class);
+                intent.putExtra("username", list.get(position));
+
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

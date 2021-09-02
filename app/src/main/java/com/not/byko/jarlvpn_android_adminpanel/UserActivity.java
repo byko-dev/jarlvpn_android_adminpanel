@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.not.byko.jarlvpn_android_adminpanel.models.ChangePasswordRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.UserDetailsResponse;
 import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 
@@ -58,6 +59,12 @@ public class UserActivity extends AppCompatActivity {
     public void deleteThisUser(View view){
         Toast.makeText(view.getContext(), webController.deleteUserAccount(username).getMessage(),
                 Toast.LENGTH_SHORT).show();
+    }
+
+    public void changePassword(View view){
+        Intent intent = new Intent(view.getContext(), ChangePasswordActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 
 }

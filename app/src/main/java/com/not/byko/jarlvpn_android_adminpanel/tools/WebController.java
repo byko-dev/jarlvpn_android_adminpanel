@@ -1,6 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel.tools;
 
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangeConfigRequest;
+import com.not.byko.jarlvpn_android_adminpanel.models.ChangePasswordRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.Configs;
@@ -350,6 +351,20 @@ public class WebController {
         return new StatusModel();
     }
 
+    public StatusModel changePasswordForUser(String username, String password){
+        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
+            ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(username, password, password);
+
+            HttpEntity<ChangePasswordRequest> entity = new HttpEntity<ChangePasswordRequest>(changePasswordRequest, authorizedHeader());
+
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/password/change",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }else{
+            //do nothing
+        }
+        return new StatusModel();
+    }
 
 
 

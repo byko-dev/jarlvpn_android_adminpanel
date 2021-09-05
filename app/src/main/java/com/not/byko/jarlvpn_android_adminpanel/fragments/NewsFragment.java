@@ -48,7 +48,7 @@ public class NewsFragment extends Fragment {
         List<String> newsContent = new ArrayList<>();
         List<String> newsDate = new ArrayList<>();
 
-        List<NewsListResponse> newsListResponseList = webController.getNewsList();
+        List<NewsListResponse> newsListResponseList = webController.getNewsList(view);
 
 
         for(NewsListResponse newsListResponse: newsListResponseList){

@@ -40,7 +40,7 @@ public class ConfigsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         WebController webController = new WebController();
-        List<Configs> configsList = webController.getWireGuardConfigurations();
+        List<Configs> configsList = webController.getWireGuardConfigurations(view);
         List<String> confNameAndOwner = new ArrayList<>();
         List<String> serverIp = new ArrayList<>();
 

@@ -26,7 +26,7 @@ public class UserActivity extends AppCompatActivity {
         username = intent.getStringExtra("username");
 
         webController = new WebController();
-        UserDetailsResponse detailsResponse = webController.getUserDetails(username);
+        UserDetailsResponse detailsResponse = webController.getUserDetails(username, getApplicationContext());
 
         String ipAddresses = "";
 

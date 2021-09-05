@@ -67,7 +67,7 @@ public class ServerActivity extends AppCompatActivity {
     }
 
     public void downloadPrivateKey(View view){
-        DownloadPrivateKeyResponse downloadPrivateKeyResponse = webController.downloadPPk(ipAddress);
+        DownloadPrivateKeyResponse downloadPrivateKeyResponse = webController.downloadPPk(ipAddress, view);
 
         Utils.saveConfigAsFile(view.getContext(), downloadPrivateKeyResponse.getFileNamePpk(),
                 downloadPrivateKeyResponse.getFileContentPpk(), "JarlVpnPrivateKeys");

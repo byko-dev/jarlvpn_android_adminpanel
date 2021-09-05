@@ -37,7 +37,7 @@ public class AffiliateFragment extends Fragment {
         WebController webController = new WebController();
 
         ListView listView = getView().findViewById(R.id.affiliate_listView);
-        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, webController.getAffiliates());
+        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, webController.getAffiliates(view));
         listView.setAdapter(arrayAdapter);
     }
 

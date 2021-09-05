@@ -51,7 +51,7 @@ public class PromoCodesFragment extends Fragment {
 
         List<String> titles = new ArrayList<>();
         List<String> description = new ArrayList<>();
-        List<DiscountCode> discountCodeList = webController.getDiscountCodeList();
+        List<DiscountCode> discountCodeList = webController.getDiscountCodeList(getView());
 
         for(DiscountCode discountCode : discountCodeList){
             titles.add(discountCode.getCode());

@@ -40,7 +40,7 @@ public class PromoCodeActivity extends AppCompatActivity {
 
     public void deleteDiscountCode(View view){
         WebController webController = new WebController();
-        Toast.makeText(view.getContext(), webController.deleteCode(code).getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(view.getContext(), webController.deleteCode(code, view).getMessage(), Toast.LENGTH_LONG).show();
         super.onBackPressed();
     }
 

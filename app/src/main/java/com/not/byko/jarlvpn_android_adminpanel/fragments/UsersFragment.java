@@ -41,7 +41,7 @@ public class UsersFragment extends Fragment {
 
         WebController webController = new WebController();
 
-        List<String> list = webController.getUsersList();
+        List<String> list = webController.getUsersList(view);
 
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
 

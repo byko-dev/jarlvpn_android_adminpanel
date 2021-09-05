@@ -47,7 +47,7 @@ public class ConfigActivity extends AppCompatActivity {
 
     public void downloadConfiguration(View view){
         WebController webController = new WebController();
-        ConfigResponse configResponse = webController.getConfigContent(usernameId, confNameStr);
+        ConfigResponse configResponse = webController.getConfigContent(usernameId, confNameStr, view);
 
         Utils.saveConfigAsFile(view.getContext(), configResponse.getConfigName() + ".conf",
                 configResponse.getConfigContext(), "JarlVpnConfigs");

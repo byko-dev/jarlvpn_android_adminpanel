@@ -45,7 +45,7 @@ public class ServersFragment extends Fragment {
 
         List<String> serverIP = new ArrayList<>();
         List<Integer> serverCountryImageCode = new ArrayList<>();
-        List<ServersListResponse> servers = webController.getServerList();
+        List<ServersListResponse> servers = webController.getServerList(view);
 
         for(ServersListResponse serversListResponse : servers){
             serverIP.add(serversListResponse.getIpAddress() +

@@ -1,5 +1,9 @@
 package com.not.byko.jarlvpn_android_adminpanel.tools;
 
+import android.content.Context;
+import android.view.View;
+import android.widget.Toast;
+
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangeConfigRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangePasswordRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigRequest;
@@ -20,13 +24,13 @@ import com.not.byko.jarlvpn_android_adminpanel.models.StatusModel;
 import com.not.byko.jarlvpn_android_adminpanel.models.UserDetailsRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.UserDetailsResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.WebConfig;
-import com.not.byko.jarlvpn_android_adminpanel.tools.Utils;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -40,7 +44,12 @@ public class WebController {
 
     private String backend_api = "https://jarlvpn.com/api";
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
+
+
+    public WebController(){
+        restTemplate = new RestTemplate();
+    }
 
 
     public HttpHeaders authorizedHeader(){
@@ -59,281 +68,258 @@ public class WebController {
 
         HttpEntity<LoginRequest> httpEntity = new HttpEntity<LoginRequest>(loginRequest, headers);
 
-        ResponseEntity<LoginResponse> response = restTemplate.exchange(backend_api + "/adminpanel/login",
-                HttpMethod.POST, httpEntity, LoginResponse.class);
-
-        if(response.getStatusCode().is2xxSuccessful()){
+        try{
+            ResponseEntity<LoginResponse> response = restTemplate.exchange(backend_api + "/adminpanel/login",
+                    HttpMethod.POST, httpEntity, LoginResponse.class);
             jwtToken = response.getBody().getJwt();
             expireTokenDate = System.currentTimeMillis();
-
             return true;
-        }else{
+        }catch(HttpClientErrorException ex){
             return false;
         }
     }
 
-    public List<String> getUsersList(){
+    public List<String> getUsersList(View view){
+        HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
 
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
-
+        try{
             ResponseEntity<String[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutboard",
                     HttpMethod.GET, entity, String[].class);
 
             return Arrays.asList(responseEntity.getBody().clone());
-
-        }else{
-            //redirect to login panel
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 
-    public List<DiscountCode> getDiscountCodeList(){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+    public List<DiscountCode> getDiscountCodeList(View view){
+        HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
 
+        try{
             ResponseEntity<DiscountCode[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/discountlist",
                     HttpMethod.GET, entity, DiscountCode[].class);
             return Arrays.asList(responseEntity.getBody());
-        }else{
-            //redirect to login panel
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 
-    public List<NewsListResponse> getNewsList(){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+    public List<NewsListResponse> getNewsList(View view){
+        HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
 
+        try {
             ResponseEntity<NewsListResponse[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/allnews",
                     HttpMethod.GET, entity, NewsListResponse[].class);
             return Arrays.asList(responseEntity.getBody());
-        }else{
-            //redirect to login panel or something
-        }
 
-        return Collections.emptyList();
+        }catch (HttpClientErrorException ex) {
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
+        }
     }
 
-    public List<ServersListResponse> getServerList(){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
-
-            ResponseEntity<ServersListResponse[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutboard/jarlservers",
-                    HttpMethod.GET, entity, ServersListResponse[].class);
+    public List<ServersListResponse> getServerList(View view){
+        HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+        try{
+            ResponseEntity<ServersListResponse[]> responseEntity = restTemplate.exchange(
+                    backend_api + "/adminpanel/gutboard/jarlservers", HttpMethod.GET,
+                    entity, ServersListResponse[].class);
             return Arrays.asList(responseEntity.getBody());
-        }else{
-            //something
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 
 
-    public WebConfig getDetails(){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
-
-            ResponseEntity<WebConfig> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutconfig",
-                    HttpMethod.GET, entity, WebConfig.class);
+    public WebConfig getDetails(View view){
+        HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+        try{
+            ResponseEntity<WebConfig> responseEntity = restTemplate.exchange(
+                    backend_api + "/adminpanel/gutconfig", HttpMethod.GET, entity, WebConfig.class);
             return responseEntity.getBody();
-        }else{
-            //something
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return new WebConfig();
         }
-        return new WebConfig();
     }
 
-    public List<Configs> getWireGuardConfigurations(){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
-
+    public List<Configs> getWireGuardConfigurations(View view){
+        HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+        try{
             ResponseEntity<Configs[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/allconfigs",
                     HttpMethod.GET, entity, Configs[].class);
             return Arrays.asList(responseEntity.getBody());
-        }else{
-            //something
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 
-    public ConfigResponse getConfigContent(String usernameId, String configName){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)) {
-            ConfigRequest configRequest = new ConfigRequest(usernameId, configName);
+    public ConfigResponse getConfigContent(String usernameId, String configName, View view) {
+        ConfigRequest configRequest = new ConfigRequest(usernameId, configName);
+        HttpEntity<ConfigRequest> entity = new HttpEntity<ConfigRequest>(configRequest, authorizedHeader());
 
-            HttpEntity<ConfigRequest> entity = new HttpEntity<ConfigRequest>( configRequest, authorizedHeader());
-
+        try {
             ResponseEntity<ConfigResponse> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/download",
                     HttpMethod.POST, entity, ConfigResponse.class);
 
             return responseEntity.getBody();
-        }else{
-            //something
+        } catch (HttpClientErrorException ex) {
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return new ConfigResponse();
         }
-        return new ConfigResponse();
     }
 
-    public StatusModel deleteCode(String code){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            DeleteCodeRequest deleteCodeRequest = new DeleteCodeRequest(code);
+    public StatusModel deleteCode(String code, View view){
+        DeleteCodeRequest deleteCodeRequest = new DeleteCodeRequest(code);
+        HttpEntity<DeleteCodeRequest> entity = new HttpEntity<DeleteCodeRequest>( deleteCodeRequest, authorizedHeader());
 
-            HttpEntity<DeleteCodeRequest> entity = new HttpEntity<DeleteCodeRequest>( deleteCodeRequest, authorizedHeader());
-
-            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/delete/discountcode",
-                    HttpMethod.POST, entity, StatusModel.class);
+        try{
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(
+                    backend_api + "/adminpanel/delete/discountcode", HttpMethod.POST,
+                    entity, StatusModel.class);
             return responseEntity.getBody();
-        }else{
-            //something
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return new StatusModel();
         }
-        return new StatusModel();
     }
 
     public StatusModel setGutConfig(Float oneMonthPrice, Integer sixMonthsDiscount){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            ChangeConfigRequest changeConfigRequest = new ChangeConfigRequest(oneMonthPrice, sixMonthsDiscount);
-
-            HttpEntity<ChangeConfigRequest> entity = new HttpEntity<ChangeConfigRequest>(changeConfigRequest, authorizedHeader());
+        ChangeConfigRequest changeConfigRequest = new ChangeConfigRequest(oneMonthPrice, sixMonthsDiscount);
+        HttpEntity<ChangeConfigRequest> entity = new HttpEntity<ChangeConfigRequest>(changeConfigRequest, authorizedHeader());
+        try{
             ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutconfig",
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
-        }else{
-            //something
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
         }
-        return new StatusModel();
     }
 
-    public List<String> getAffiliates(){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
-
+    public List<String> getAffiliates(View view){
+        HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+        try{
             ResponseEntity<String[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/affiliate/list",
                     HttpMethod.GET, entity, String[].class);
 
             return Arrays.asList(responseEntity.getBody());
-        }else{
-            //something
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 
     public StatusModel createNews(String newsContent){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            CreateNewsRequest createNewsRequest = new CreateNewsRequest(newsContent);
+        CreateNewsRequest createNewsRequest = new CreateNewsRequest(newsContent);
 
-            HttpEntity<CreateNewsRequest> entity = new HttpEntity<CreateNewsRequest>(createNewsRequest, authorizedHeader());
-
+        HttpEntity<CreateNewsRequest> entity = new HttpEntity<CreateNewsRequest>(createNewsRequest, authorizedHeader());
+        try{
             ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/create/news",
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
-        }else{
-            //something
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
         }
-
-        return new StatusModel();
     }
 
     public StatusModel deleteNews(String newsID){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            DeleteNewsRequest deleteNewsRequest = new DeleteNewsRequest(newsID);
+        DeleteNewsRequest deleteNewsRequest = new DeleteNewsRequest(newsID);
 
-            HttpEntity<DeleteNewsRequest> entity = new HttpEntity<DeleteNewsRequest>(deleteNewsRequest, authorizedHeader());
-
+        HttpEntity<DeleteNewsRequest> entity = new HttpEntity<DeleteNewsRequest>(deleteNewsRequest, authorizedHeader());
+        try{
             ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/delete/news",
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
-        }else{
-            //do something
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
         }
-        return new StatusModel();
     }
 
     public StatusModel resetServer(String ipAddress){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            ResetServerRequest resetServerRequest = new ResetServerRequest(ipAddress);
+        ResetServerRequest resetServerRequest = new ResetServerRequest(ipAddress);
 
-            HttpEntity<ResetServerRequest> entity = new HttpEntity<ResetServerRequest>(resetServerRequest, authorizedHeader());
-
+        HttpEntity<ResetServerRequest> entity = new HttpEntity<ResetServerRequest>(resetServerRequest, authorizedHeader());
+        try {
             ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/reset/server",
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
-        }else{
-            //do something
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
         }
-        return new StatusModel();
     }
 
-    public DownloadPrivateKeyResponse downloadPPk(String ipAddress){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            ResetServerRequest resetServerRequest = new ResetServerRequest(ipAddress);
+    public DownloadPrivateKeyResponse downloadPPk(String ipAddress, View view){
+        ResetServerRequest resetServerRequest = new ResetServerRequest(ipAddress);
 
-            HttpEntity<ResetServerRequest> entity = new HttpEntity<ResetServerRequest>(resetServerRequest, authorizedHeader());
-
+        HttpEntity<ResetServerRequest> entity = new HttpEntity<ResetServerRequest>(resetServerRequest, authorizedHeader());
+        try {
             ResponseEntity<DownloadPrivateKeyResponse> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/privatekey/download",
                     HttpMethod.POST, entity, DownloadPrivateKeyResponse.class);
 
             return responseEntity.getBody();
-        }else{
-            //do something
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return new DownloadPrivateKeyResponse();
         }
-        return new DownloadPrivateKeyResponse();
     }
 
     public StatusModel refundServer(String ipAddress){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            ResetServerRequest resetServerRequest = new ResetServerRequest(ipAddress);
+        ResetServerRequest resetServerRequest = new ResetServerRequest(ipAddress);
 
-            HttpEntity<ResetServerRequest> entity = new HttpEntity<ResetServerRequest>(resetServerRequest, authorizedHeader());
-
+        HttpEntity<ResetServerRequest> entity = new HttpEntity<ResetServerRequest>(resetServerRequest, authorizedHeader());
+        try{
             ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/server/refund",
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
-        }else{
-            //do something
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
         }
-        return new StatusModel();
     }
 
     public StatusModel deleteServer(String ipAddress, boolean wipeWg){
-        if (Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            RemoveServerRequest removeServerRequest = new RemoveServerRequest(ipAddress, wipeWg);
+        RemoveServerRequest removeServerRequest = new RemoveServerRequest(ipAddress, wipeWg);
 
-            HttpEntity<RemoveServerRequest> entity = new HttpEntity<RemoveServerRequest>(removeServerRequest, authorizedHeader());
-
-            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/gutboard/removejarlserver",
+        HttpEntity<RemoveServerRequest> entity = new HttpEntity<RemoveServerRequest>(removeServerRequest, authorizedHeader());
+        try{
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(
+                    backend_api + "/adminpanel/gutboard/removejarlserver",
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
-        }else{
-            //do nothing
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
         }
-        return new StatusModel();
     }
 
-    public UserDetailsResponse getUserDetails(String username){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+    public UserDetailsResponse getUserDetails(String username, Context context){
+        UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
 
-            HttpEntity<UserDetailsRequest> entity = new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
-
-            ResponseEntity<UserDetailsResponse> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/password/details",
+        HttpEntity<UserDetailsRequest> entity = new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+        try{
+            ResponseEntity<UserDetailsResponse> responseEntity = restTemplate.exchange(
+                    backend_api + "/adminpanel/password/details",
                     HttpMethod.POST, entity,  UserDetailsResponse.class);
             return responseEntity.getBody();
-        }else{
-            //do something
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(context, ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return new UserDetailsResponse();
         }
-        return new UserDetailsResponse();
     }
 
     public StatusModel blockUser(String username){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+        UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
 
-            HttpEntity<UserDetailsRequest> entity = new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
-
+        HttpEntity<UserDetailsRequest> entity = new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+        try{
             ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/password/block/user",
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
-        }else{
-            //do nothing
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
         }
-        return new StatusModel();
     }
 
     public StatusModel deleteUserAccount(String username){
@@ -365,10 +351,6 @@ public class WebController {
         }
         return new StatusModel();
     }
-
-
-
-
 
 
     public static void logout(){

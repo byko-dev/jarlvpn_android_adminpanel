@@ -51,7 +51,7 @@ public class DetailsFragment extends Fragment {
         TextView todayPaypal = getView().findViewById(R.id.textView14);
         TextView todayCrypto = getView().findViewById(R.id.textView15);
 
-        WebConfig webConfig = webController.getDetails();
+        WebConfig webConfig = webController.getDetails(view);
 
         oneMonthPriceValue = webConfig.getOneMonthPrice();
         sixMonthsDiscountValue = webConfig.getSixMonthDiscount();

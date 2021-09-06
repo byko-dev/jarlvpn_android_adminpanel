@@ -35,7 +35,12 @@
 
         <item android:id="@+id/nav_invoices"
             android:icon="@drawable/ic_money"
-            android:title="Invoices" />
+            android:title="Paypal invoices" />
+
+        <item android:id="@+id/nav_invoices_crypto"
+            android:icon="@drawable/ic_money"
+            android:title="Crypto invoices" />
+
         <item android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
             android:title="Logout" />

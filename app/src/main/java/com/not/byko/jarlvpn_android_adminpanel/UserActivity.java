@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ public class UserActivity extends AppCompatActivity {
 
     private WebController webController;
     private String username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,14 @@ public class UserActivity extends AppCompatActivity {
         TextView userTypeTextView = findViewById(R.id.textView48);
         TextView vpnActivatedTextView = findViewById(R.id.textView49);
         TextView ipAddressTextView = findViewById(R.id.textView50);
+        Button setAffiliatePartner = findViewById(R.id.button28);
 
         usernameTextView.setText("Username: " + username);
         createDateTextView.setText("Account created date: " + detailsResponse.getCreateDate());
         userTypeTextView.setText("User type: " + detailsResponse.getUserType());
         vpnActivatedTextView.setText("Active subscription: " + detailsResponse.getVpnActivated());
         ipAddressTextView.setText("Client ip addresses" + ipAddresses);
+        if(detailsResponse.getAffiliatePartner()) setAffiliatePartner.setVisibility(View.GONE);
     }
 
     public void backToUsers(View view){

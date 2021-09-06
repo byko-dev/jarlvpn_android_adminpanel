@@ -11,20 +11,6 @@ import java.util.Calendar;
 
 public class Utils {
 
-    public static Boolean checkJwtBeforeRequest(String jwt, long jwtExpireDate){
-        if(!jwt.equals("") && jwtExpireDate != 0){
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(jwtExpireDate);
-            calendar.add(Calendar.HOUR, 24);
-
-            if(calendar.getTime().getTime() > System.currentTimeMillis()){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static void saveConfigAsFile(Context context, String fileName, String content, String childName){
         try {
             File root = new File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),

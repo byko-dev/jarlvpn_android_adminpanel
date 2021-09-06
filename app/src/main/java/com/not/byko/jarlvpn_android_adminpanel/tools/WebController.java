@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
 
+import com.not.byko.jarlvpn_android_adminpanel.models.AllCryptoInvoices;
+import com.not.byko.jarlvpn_android_adminpanel.models.AllPaypalInvoices;
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangeConfigRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangePasswordRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.Configs;
+import com.not.byko.jarlvpn_android_adminpanel.models.CreateDiscountCodeRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.CreateNewsRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.DeleteCodeRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.DeleteNewsRequest;
@@ -363,7 +366,43 @@ public class WebController {
         }
     }
 
+    public StatusModel createNewDiscountCode(String discountCode, int percentage, int billing, String plan){
+        CreateDiscountCodeRequest createDiscountCodeRequest =
+                new CreateDiscountCodeRequest(discountCode, percentage, plan, billing);
+        HttpEntity<CreateDiscountCodeRequest> entity =
+                new HttpEntity<CreateDiscountCodeRequest>(createDiscountCodeRequest, authorizedHeader());
+        try{
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/create/discountcode",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
+        }
+    }
 
+    public List<AllCryptoInvoices> getAllCryptoInvoices(View view){
+        HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+        try {
+            ResponseEntity<AllCryptoInvoices[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/allCrypto",
+                    HttpMethod.GET, entity, AllCryptoInvoices[].class);
+            return Arrays.asList(responseEntity.getBody());
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
+        }
+    }
+
+    public List<AllPaypalInvoices> getAllPaypalInvoices(View view){
+        HttpEntity<?> entity = new HttpEntity<>(authorizedHeader());
+        try{
+            ResponseEntity<AllPaypalInvoices[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/allpaypal",
+                    HttpMethod.GET, entity, AllPaypalInvoices[].class);
+            return Arrays.asList(responseEntity.getBody());
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view.getContext(), ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
+        }
+    }
 
     public static void logout(){
         jwtToken = "";

@@ -15,15 +15,13 @@ import android.widget.ListView;
 
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllCryptoInvoices;
-import com.not.byko.jarlvpn_android_adminpanel.models.AllPaypalInvoices;
 import com.not.byko.jarlvpn_android_adminpanel.tools.InvoiceAdapter;
-import com.not.byko.jarlvpn_android_adminpanel.tools.SearchableAdapter;
 import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvoicesFragment extends Fragment {
+public class InvoicesCryptoFragment extends Fragment {
 
     private InvoiceAdapter searchableAdapter;
 
@@ -31,7 +29,7 @@ public class InvoicesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.invoices_fragment, container, false);
+        return inflater.inflate(R.layout.invoices_crypto_fragment, container, false);
     }
 
     @Override
@@ -43,13 +41,13 @@ public class InvoicesFragment extends Fragment {
         List<String> transactionId = new ArrayList<>();
         List<Boolean> paidInvoice = new ArrayList<>();
 
-        for (AllPaypalInvoices paypalInvoices: webController.getAllPaypalInvoices(view)){
-            ownersMail.add(paypalInvoices.getOwnerMail());
-            transactionId.add(paypalInvoices.getPaymentId());
-            paidInvoice.add(paypalInvoices.isPaid());
+        for (AllCryptoInvoices cryptoInvoices : webController.getAllCryptoInvoices(view)){
+            ownersMail.add(cryptoInvoices.getOwnerMail());
+            transactionId.add(cryptoInvoices.getIdTransaction());
+            paidInvoice.add(cryptoInvoices.isPaid());
         }
 
-        ListView listView = getView().findViewById(R.id.paypal_listView);
+        ListView listView = getView().findViewById(R.id.crypto_listView);
 
         searchableAdapter = new InvoiceAdapter(getContext(), ownersMail, transactionId, paidInvoice, view);
 

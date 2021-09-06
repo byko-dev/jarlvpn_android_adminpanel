@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.AffiliateFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.ConfigsFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.DetailsFragment;
+import com.not.byko.jarlvpn_android_adminpanel.fragments.InvoicesCryptoFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.InvoicesFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.NewsFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.PromoCodesFragment;
@@ -115,6 +116,10 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             case R.id.nav_invoices:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new InvoicesFragment()).commit();
+                break;
+            case R.id.nav_invoices_crypto:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new InvoicesCryptoFragment()).commit();
                 break;
             case R.id.nav_logout:
                 WebController.logout();

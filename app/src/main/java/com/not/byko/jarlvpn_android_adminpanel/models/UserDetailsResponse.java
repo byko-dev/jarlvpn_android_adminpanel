@@ -8,12 +8,15 @@ public class UserDetailsResponse {
     public Boolean vpnActivated;
     public List<String> ipAddress;
     public String userType;
+    public Boolean affiliatePartner;
 
-    public UserDetailsResponse(String createDate, Boolean vpnActivated, List<String> ipAddress, String userType) {
+    public UserDetailsResponse(String createDate, Boolean vpnActivated, List<String> ipAddress,
+                               String userType, Boolean affiliatePartner) {
         this.createDate = createDate;
         this.vpnActivated = vpnActivated;
         this.ipAddress = ipAddress;
         this.userType = userType;
+        this.affiliatePartner = affiliatePartner;
     }
 
     public UserDetailsResponse() {}
@@ -48,5 +51,13 @@ public class UserDetailsResponse {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public Boolean getAffiliatePartner() {
+        return affiliatePartner;
+    }
+
+    public void setAffiliatePartner(Boolean affiliatePartner) {
+        this.affiliatePartner = affiliatePartner;
     }
 }

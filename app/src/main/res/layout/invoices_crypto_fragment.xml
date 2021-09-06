@@ -6,6 +6,6 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/paypal_listView"/>
+        android:id="@+id/crypto_listView"/>
 
 </RelativeLayout>

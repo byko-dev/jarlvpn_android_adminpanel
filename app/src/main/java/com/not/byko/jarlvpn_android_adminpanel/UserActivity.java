@@ -67,4 +67,10 @@ public class UserActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void setAffiliator(View view){
+        Intent intent = new Intent(view.getContext(), CreateAffiliatorActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
+    }
+
 }

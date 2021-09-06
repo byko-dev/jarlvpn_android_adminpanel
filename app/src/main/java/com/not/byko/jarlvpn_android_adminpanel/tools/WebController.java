@@ -20,6 +20,7 @@ import com.not.byko.jarlvpn_android_adminpanel.models.NewsListResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.RemoveServerRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ResetServerRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ServersListResponse;
+import com.not.byko.jarlvpn_android_adminpanel.models.SetAffiliateAccessRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.StatusModel;
 import com.not.byko.jarlvpn_android_adminpanel.models.UserDetailsRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.UserDetailsResponse;
@@ -323,34 +324,45 @@ public class WebController {
     }
 
     public StatusModel deleteUserAccount(String username){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+        UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
 
-            HttpEntity<UserDetailsRequest> entity = new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
-
+        HttpEntity<UserDetailsRequest> entity = new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+        try{
             ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/password/delete",
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
-        }else {
-            //do nothing
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
         }
-        return new StatusModel();
     }
 
     public StatusModel changePasswordForUser(String username, String password){
-        if(Utils.checkJwtBeforeRequest(jwtToken, expireTokenDate)){
-            ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(username, password, password);
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(username, password, password);
 
-            HttpEntity<ChangePasswordRequest> entity = new HttpEntity<ChangePasswordRequest>(changePasswordRequest, authorizedHeader());
-
+        HttpEntity<ChangePasswordRequest> entity = new HttpEntity<ChangePasswordRequest>(changePasswordRequest, authorizedHeader());
+        try{
             ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/password/change",
                     HttpMethod.POST, entity, StatusModel.class);
             return responseEntity.getBody();
-        }else{
-            //do nothing
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
         }
-        return new StatusModel();
     }
+
+    public StatusModel createNewAffiliator(String username, String promoCode){
+        SetAffiliateAccessRequest setAffiliateAccessRequest =
+                new SetAffiliateAccessRequest(username, promoCode);
+        HttpEntity<SetAffiliateAccessRequest> entity =
+                new HttpEntity<SetAffiliateAccessRequest>(setAffiliateAccessRequest, authorizedHeader());
+        try{
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/affiliate/access",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
+        }
+    }
+
 
 
     public static void logout(){

@@ -1,7 +1,10 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,7 +39,22 @@ public class CreateNewsActivity extends AppCompatActivity {
                 webController.createNews(editText.getText().toString()).getMessage(), Toast.LENGTH_SHORT).show();
     }
 
-    public void backToNews(View view){
-        super.onBackPressed();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_arrow);// set drawable icon
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

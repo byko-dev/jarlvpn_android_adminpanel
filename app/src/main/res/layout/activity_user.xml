@@ -97,11 +97,5 @@
             android:text="Delete this account"
             android:onClick="deleteThisUser"/>
 
-        <Button
-            android:id="@+id/button25"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:onClick="backToUsers"/>
     </LinearLayout>
 </ScrollView>

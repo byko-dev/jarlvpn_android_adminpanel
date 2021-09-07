@@ -41,10 +41,5 @@
         android:onClick="createNewNews"
         android:text="Create" />
 
-    <Button
-        android:id="@+id/button12"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:onClick="backToNews"/>
+
 </LinearLayout>

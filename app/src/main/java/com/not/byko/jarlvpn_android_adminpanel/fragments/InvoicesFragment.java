@@ -1,5 +1,6 @@
 package com.not.byko.jarlvpn_android_adminpanel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.not.byko.jarlvpn_android_adminpanel.InvoiceActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllCryptoInvoices;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllPaypalInvoices;
@@ -43,7 +46,9 @@ public class InvoicesFragment extends Fragment {
         List<String> transactionId = new ArrayList<>();
         List<Boolean> paidInvoice = new ArrayList<>();
 
-        for (AllPaypalInvoices paypalInvoices: webController.getAllPaypalInvoices(view)){
+        List<AllPaypalInvoices> allPaypalInvoicesList = webController.getAllPaypalInvoices(view);
+
+        for (AllPaypalInvoices paypalInvoices: allPaypalInvoicesList){
             ownersMail.add(paypalInvoices.getOwnerMail());
             transactionId.add(paypalInvoices.getPaymentId());
             paidInvoice.add(paypalInvoices.isPaid());
@@ -55,8 +60,22 @@ public class InvoicesFragment extends Fragment {
 
         listView.setAdapter(searchableAdapter);
 
-    }
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getActivity(), InvoiceActivity.class);
+                intent.putExtra("ownersMail", allPaypalInvoicesList.get(position).getOwnerMail());
+                intent.putExtra("transactionId", allPaypalInvoicesList.get(position).getPaymentId());
+                intent.putExtra("paidInvoice", allPaypalInvoicesList.get(position).isPaid());
+                intent.putExtra("purchaseDate", allPaypalInvoicesList.get(position).getPurchaseDate());
+                intent.putExtra("subType", allPaypalInvoicesList.get(position).getSubType());
+                intent.putExtra("price", allPaypalInvoicesList.get(position).getPrice());
+                intent.putExtra("cryptocurrency", "");
+                startActivity(intent);
+            }
+        });
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

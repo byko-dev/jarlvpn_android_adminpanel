@@ -4,11 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateAffiliatorActivity"
+    tools:context=".AffiliateActivity"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView53"
+        android:id="@+id/textView67"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/textView68"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
@@ -18,58 +33,36 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall" />
 
     <TextView
-        android:id="@+id/textView54"
+        android:id="@+id/textView69"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Discount percent: 10%"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:gravity="center_vertical"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+        android:minHeight="?android:attr/listPreferredItemHeightSmall" />
 
     <TextView
-        android:id="@+id/textView55"
+        android:id="@+id/textView70"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Billing: 1 month"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:gravity="center_vertical"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
-
-    <TextView
-        android:id="@+id/textView56"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Plan: personal"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="center_vertical"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
-
-    <TextView
-        android:id="@+id/textView58"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="Type new discount code for affiliate partner:" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        />
+        android:minHeight="?android:attr/listPreferredItemHeightSmall" />
 
     <Button
-        android:id="@+id/button29"
+        android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set new affiliate partner"
-        android:onClick="newAffiliatePartner"/>
+        android:text="Reset withdraw value!"
+        android:onClick="resetAffiliate"/>
 
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete affiliate permission"
+        android:onClick="deleteAffiliatePermission"/>
 </LinearLayout>

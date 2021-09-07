@@ -4,8 +4,11 @@ package com.not.byko.jarlvpn_android_adminpanel;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,12 +60,22 @@ public class ConfigActivity extends AppCompatActivity {
         Toast.makeText(view.getContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
     }
 
-    public void backActivity(View view){
-        super.onBackPressed();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_arrow);// set drawable icon
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
-
-
-
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

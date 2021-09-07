@@ -1,5 +1,6 @@
 package com.not.byko.jarlvpn_android_adminpanel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.not.byko.jarlvpn_android_adminpanel.InvoiceActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllCryptoInvoices;
 import com.not.byko.jarlvpn_android_adminpanel.tools.InvoiceAdapter;
@@ -41,7 +44,9 @@ public class InvoicesCryptoFragment extends Fragment {
         List<String> transactionId = new ArrayList<>();
         List<Boolean> paidInvoice = new ArrayList<>();
 
-        for (AllCryptoInvoices cryptoInvoices : webController.getAllCryptoInvoices(view)){
+        List<AllCryptoInvoices> allCryptoInvoicesList = webController.getAllCryptoInvoices(view);
+
+        for (AllCryptoInvoices cryptoInvoices : allCryptoInvoicesList){
             ownersMail.add(cryptoInvoices.getOwnerMail());
             transactionId.add(cryptoInvoices.getIdTransaction());
             paidInvoice.add(cryptoInvoices.isPaid());
@@ -53,8 +58,21 @@ public class InvoicesCryptoFragment extends Fragment {
 
         listView.setAdapter(searchableAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getActivity(), InvoiceActivity.class);
+                intent.putExtra("ownersMail", allCryptoInvoicesList.get(position).getOwnerMail());
+                intent.putExtra("transactionId", allCryptoInvoicesList.get(position).getIdTransaction());
+                intent.putExtra("paidInvoice", allCryptoInvoicesList.get(position).isPaid());
+                intent.putExtra("cryptocurrency", allCryptoInvoicesList.get(position).getCryptocurrency());
+                intent.putExtra("purchaseDate", allCryptoInvoicesList.get(position).getPurchaseDate());
+                intent.putExtra("subType", allCryptoInvoicesList.get(position).getSubType());
+                intent.putExtra("price", allCryptoInvoicesList.get(position).getPrice());
+                startActivity(intent);
+            }
+        });
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

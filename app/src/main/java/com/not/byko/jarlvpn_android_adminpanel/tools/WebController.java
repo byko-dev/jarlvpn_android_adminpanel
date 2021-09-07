@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
 
+import com.not.byko.jarlvpn_android_adminpanel.models.AffiliateDetailsResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllCryptoInvoices;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllPaypalInvoices;
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangeConfigRequest;
@@ -44,7 +45,6 @@ import java.util.List;
 public class WebController {
 
     private static String jwtToken = "";
-    private static long expireTokenDate = 0;
 
     private String backend_api = "https://jarlvpn.com/api";
 
@@ -76,7 +76,6 @@ public class WebController {
             ResponseEntity<LoginResponse> response = restTemplate.exchange(backend_api + "/adminpanel/login",
                     HttpMethod.POST, httpEntity, LoginResponse.class);
             jwtToken = response.getBody().getJwt();
-            expireTokenDate = System.currentTimeMillis();
             return true;
         }catch(HttpClientErrorException ex){
             return false;
@@ -404,8 +403,52 @@ public class WebController {
         }
     }
 
+    public AffiliateDetailsResponse getAffiliateDetails(String username, Context view){
+        UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+
+        HttpEntity<UserDetailsRequest> entity =
+                new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+        try{
+            ResponseEntity<AffiliateDetailsResponse> responseEntity =
+                    restTemplate.exchange(backend_api + "/adminpanel/affiliate/details", HttpMethod.POST,
+                            entity, AffiliateDetailsResponse.class);
+            return responseEntity.getBody();
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(view, ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return new AffiliateDetailsResponse();
+        }
+    }
+
+    public StatusModel resetWithdrawValue(String username){
+        UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+
+        HttpEntity<UserDetailsRequest> entity =
+                new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+        try{
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/affiliate/reset",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
+        }
+    }
+
+    public StatusModel deleteAffiliatePermission(String username){
+        UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+
+        HttpEntity<UserDetailsRequest> entity =
+                new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+        try{
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(
+                    backend_api + "/adminpanel/affiliate/access/denied",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getStatusText());
+        }
+    }
+
     public static void logout(){
         jwtToken = "";
-        expireTokenDate = 0;
     }
 }

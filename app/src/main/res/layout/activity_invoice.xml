@@ -4,11 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateAffiliatorActivity"
+    tools:context=".InvoiceActivity"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView53"
+        android:id="@+id/textView59"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+
+    <TextView
+        android:id="@+id/textView60"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/textView61"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
@@ -18,10 +43,9 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall" />
 
     <TextView
-        android:id="@+id/textView54"
+        android:id="@+id/textView62"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Discount percent: 10%"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:gravity="center_vertical"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
@@ -29,10 +53,9 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
 
     <TextView
-        android:id="@+id/textView55"
+        android:id="@+id/textView64"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Billing: 1 month"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:gravity="center_vertical"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
@@ -40,10 +63,9 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
 
     <TextView
-        android:id="@+id/textView56"
+        android:id="@+id/textView65"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Plan: personal"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:gravity="center_vertical"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
@@ -51,25 +73,17 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
 
     <TextView
-        android:id="@+id/textView58"
+        android:id="@+id/textView66"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="Type new discount code for affiliate partner:" />
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
 
-    <EditText
-        android:id="@+id/editTextTextPersonName4"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        />
-
-    <Button
-        android:id="@+id/button29"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Set new affiliate partner"
-        android:onClick="newAffiliatePartner"/>
-
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
 </LinearLayout>

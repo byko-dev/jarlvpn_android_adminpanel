@@ -1,8 +1,11 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -51,10 +54,6 @@ public class UserActivity extends AppCompatActivity {
         if(detailsResponse.getAffiliatePartner()) setAffiliatePartner.setVisibility(View.GONE);
     }
 
-    public void backToUsers(View view){
-        super.onBackPressed();
-    }
-
     public void blockUser(View view){
         Toast.makeText(view.getContext(), webController.blockUser(username).getMessage(),
                 Toast.LENGTH_SHORT).show();
@@ -76,5 +75,25 @@ public class UserActivity extends AppCompatActivity {
         intent.putExtra("username", username);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_arrow);// set drawable icon
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
 }

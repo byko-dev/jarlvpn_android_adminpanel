@@ -3,13 +3,19 @@ package com.not.byko.jarlvpn_android_adminpanel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +27,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
+
 
 public class ConfigActivity extends AppCompatActivity {
 
     private static String usernameId;
     private static String confNameStr;
+    private ImageView qrCodeIV;
+    private Bitmap bitmap;
+    private QRGEncoder qrgEncoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +48,7 @@ public class ConfigActivity extends AppCompatActivity {
         TextView serverIp = findViewById(R.id.textView17);
         TextView confName = findViewById(R.id.textView18);
         TextView orgConfName = findViewById(R.id.textView19);
+        qrCodeIV = findViewById(R.id.idIVQrcode);
 
         Intent intent = getIntent();
 
@@ -57,7 +70,26 @@ public class ConfigActivity extends AppCompatActivity {
     }
 
     public void createQrCode(View view){
-        Toast.makeText(view.getContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
+        WebController webController = new WebController();
+        ConfigResponse configResponse = webController.getConfigContent(usernameId, confNameStr, view);
+
+        if (TextUtils.isEmpty(configResponse.getConfigContext())) {
+
+        } else {
+            WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+            Display display = manager.getDefaultDisplay();
+
+            Point point = new Point();
+            display.getSize(point);
+            int width = point.x;
+            int height = point.y;
+
+            int dimen = width < height ? width : height;
+            dimen = dimen * 3 / 4;
+            qrgEncoder = new QRGEncoder(configResponse.getConfigContext(), null, QRGContents.Type.TEXT, dimen);
+            bitmap = qrgEncoder.getBitmap();
+            qrCodeIV.setImageBitmap(bitmap);
+        }
     }
 
     @Override

@@ -15,6 +15,7 @@ public class InvoiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invoice);
+        setTitle("JarlVPN - Invoice details");
 
         TextView ownerTextView = findViewById(R.id.textView59);
         TextView priceTextView = findViewById(R.id.textView60);

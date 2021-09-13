@@ -19,6 +19,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        setTitle("JarlVPN - new details");
 
         TextView oneMonthPriceTextView = findViewById(R.id.textView27);
         TextView sixMonthsDiscountTextView = findViewById(R.id.textView28);

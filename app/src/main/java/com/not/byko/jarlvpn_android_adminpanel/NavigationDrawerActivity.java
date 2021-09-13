@@ -36,13 +36,15 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //call setTheme before render activity
+        Intent thisIntent = getIntent();
+        if(thisIntent.getBooleanExtra("darkMode", false)) setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_navigation_drawer);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
 
 
 
@@ -63,7 +65,8 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
             navigationView.setCheckedItem(R.id.nav_details);
         }
 
-        Intent thisIntent = getIntent();
+
+
         //get element from header layout
         View nav_header = navigationView.getHeaderView(0);
         username_admin = nav_header.findViewById(R.id.username_label);
@@ -86,38 +89,47 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
         switch (menuItem.getItemId()){
             case R.id.nav_details:
+                setTitle("JarlVPN - Details");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new DetailsFragment()).commit();
                 break;
             case R.id.nav_users:
+                setTitle("JarlVPN - Users");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new UsersFragment()).commit();
                 break;
             case R.id.nav_servers:
+                setTitle("JarlVPN - Servers");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ServersFragment()).commit();
                 break;
             case R.id.nav_configs:
+                setTitle("JarlVPN - Configurations");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ConfigsFragment()).commit();
                 break;
             case R.id.nav_codes:
+                setTitle("JarlVPN - Promo codes");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new PromoCodesFragment()).commit();
                 break;
             case R.id.nav_affiliate:
+                setTitle("JarlVPN - Partners");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new AffiliateFragment()).commit();
                 break;
             case R.id.nav_news:
+                setTitle("JarlVPN - News");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new NewsFragment()).commit();
                 break;
             case R.id.nav_invoices:
+                setTitle("JarlVPN - Paypal");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new InvoicesFragment()).commit();
                 break;
             case R.id.nav_invoices_crypto:
+                setTitle("JarlVPN - Crypto");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new InvoicesCryptoFragment()).commit();
                 break;

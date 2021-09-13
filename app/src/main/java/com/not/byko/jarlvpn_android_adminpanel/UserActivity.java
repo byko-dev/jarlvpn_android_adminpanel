@@ -25,6 +25,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        setTitle("JarlVPN - user details");
 
         Intent intent = getIntent();
 

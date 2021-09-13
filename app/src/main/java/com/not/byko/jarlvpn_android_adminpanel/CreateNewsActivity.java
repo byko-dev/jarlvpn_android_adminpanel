@@ -23,6 +23,7 @@ public class CreateNewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_news);
+        setTitle("JarlVPN - new news");
 
         TextView date = findViewById(R.id.textView31);
 

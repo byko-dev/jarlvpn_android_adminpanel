@@ -103,6 +103,18 @@
             android:orientation="horizontal">
 
             <CheckBox
+                android:id="@+id/checkBox33"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:allowUndo="false"
+                android:buttonTint="@color/purple_500"
+                android:text="Captacha"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF" />
+
+            <CheckBox
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
@@ -116,13 +128,13 @@
                 tools:text="Save credentials" />
 
             <CheckBox
-                android:id="@+id/checkBox33"
+                android:id="@+id/checkBox35"
                 style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:allowUndo="false"
                 android:buttonTint="@color/purple_500"
-                android:text="Captacha"
+                android:text="Dark mode"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF" />

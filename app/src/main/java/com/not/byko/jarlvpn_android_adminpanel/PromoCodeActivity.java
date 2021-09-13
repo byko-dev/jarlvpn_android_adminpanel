@@ -22,6 +22,7 @@ public class PromoCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promo_code);
+        setTitle("JarlVPN - code details");
 
         Intent intent = getIntent();
 

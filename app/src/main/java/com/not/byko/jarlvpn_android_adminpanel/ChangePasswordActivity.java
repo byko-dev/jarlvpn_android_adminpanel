@@ -26,6 +26,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+        setTitle("JarlVPN - new password");
+
 
         TextView usernameTextView = findViewById(R.id.textView52);
         passwordEditText = findViewById(R.id.editTextTextPassword2);

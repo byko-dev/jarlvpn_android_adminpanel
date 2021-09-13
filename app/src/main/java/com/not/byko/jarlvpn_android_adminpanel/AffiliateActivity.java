@@ -27,6 +27,8 @@ public class AffiliateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_affiliate);
 
+        setTitle("JarlVPN - Partner");
+
         TextView usernameTextView = findViewById(R.id.textView67);
         TextView totalEarnedTextView = findViewById(R.id.textView68);
         TextView withdrawValueTextView = findViewById(R.id.textView69);

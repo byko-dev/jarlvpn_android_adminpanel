@@ -22,6 +22,7 @@ public class CreateAffiliatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_affiliator);
+        setTitle("JarlVPN - new partner");
 
         TextView usernameTextView = findViewById(R.id.textView53);
         promoCodeEditText = findViewById(R.id.editTextTextPersonName4);

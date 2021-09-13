@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
     private static EditText login;
     private static EditText password;
     private CheckBox checkBox;
+    private CheckBox darkModeCheckBox;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private static final String KEY_PASS = "password";
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
         login = findViewById(R.id.editTextTextPersonName);
         password = findViewById(R.id.editTextTextPassword);
         checkBox = findViewById(R.id.checkBox);
+        darkModeCheckBox = findViewById(R.id.checkBox35);
 
         //set saved credentials
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -105,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
                         });
             }
         });
-
     }
 
     public void onClickEvent(View view){
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
             setContentView(R.layout.activity_navigation_drawer);
             Intent intent = new Intent(MainActivity.this, NavigationDrawerActivity.class);
             intent.putExtra("username", login.getText().toString());
+            intent.putExtra("darkMode", darkModeCheckBox.isChecked());
             startActivity(intent);
         }else{
             Toast.makeText(view.getContext(), "Password or login wrong!", Toast.LENGTH_LONG).show();

@@ -20,6 +20,7 @@ public class DeleteNewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_news);
+        setTitle("JarlVPN - news");
 
         TextView idTextView = findViewById(R.id.textView44);
         TextView newsContextTextView = findViewById(R.id.textView45);

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.not.byko.jarlvpn_android_adminpanel.DetailsActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;

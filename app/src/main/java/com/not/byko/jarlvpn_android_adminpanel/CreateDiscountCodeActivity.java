@@ -25,6 +25,7 @@ public class CreateDiscountCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_discount_code);
+        setTitle("JarlVPN - new discount");
 
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> billingAdapter = new ArrayAdapter<String>(this,

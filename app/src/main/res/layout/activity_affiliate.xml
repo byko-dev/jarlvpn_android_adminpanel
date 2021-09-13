@@ -65,4 +65,18 @@
         android:layout_height="wrap_content"
         android:text="Delete affiliate permission"
         android:onClick="deleteAffiliatePermission"/>
+
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="paypalInvoiceList"
+        android:text="PayPal invoice list" />
+
+    <Button
+        android:id="@+id/button14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="cryptoInvoiceList"
+        android:text="Crypto invoice list" />
 </LinearLayout>

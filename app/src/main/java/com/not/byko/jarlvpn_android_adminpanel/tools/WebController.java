@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.not.byko.jarlvpn_android_adminpanel.models.AffiliateDetailsResponse;
+import com.not.byko.jarlvpn_android_adminpanel.models.AffiliatePayments;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllCryptoInvoices;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllPaypalInvoices;
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangeConfigRequest;
@@ -445,6 +446,36 @@ public class WebController {
             return responseEntity.getBody();
         }catch (HttpClientErrorException ex){
             return new StatusModel(ex.getStatusText());
+        }
+    }
+
+    public List<AffiliatePayments> getAffiliateCryptoInvoices(String username, Context context){
+        UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+
+        HttpEntity<UserDetailsRequest> entity =
+                new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+        try{
+            ResponseEntity<AffiliatePayments[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/affiliate/invoice/crypto",
+                    HttpMethod.POST, entity, AffiliatePayments[].class);
+            return Arrays.asList(responseEntity.getBody());
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(context, ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
+        }
+    }
+
+    public List<AffiliatePayments> getAffiliatePayPalInvoices(String username, Context context){
+        UserDetailsRequest userDetailsRequest = new UserDetailsRequest(username);
+
+        HttpEntity<UserDetailsRequest> entity =
+                new HttpEntity<UserDetailsRequest>(userDetailsRequest, authorizedHeader());
+        try{
+            ResponseEntity<AffiliatePayments[]> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/affiliate/invoice/paypal",
+                    HttpMethod.POST, entity, AffiliatePayments[].class);
+            return Arrays.asList(responseEntity.getBody());
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(context, ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return Collections.emptyList();
         }
     }
 

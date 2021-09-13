@@ -11,7 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.not.byko.jarlvpn_android_adminpanel.models.AffiliateDetailsResponse;
+import com.not.byko.jarlvpn_android_adminpanel.models.AffiliatePayments;
 import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AffiliateActivity extends AppCompatActivity {
 
@@ -50,6 +54,21 @@ public class AffiliateActivity extends AppCompatActivity {
         Toast.makeText(view.getContext(),
                 webController.deleteAffiliatePermission(username).getMessage(),
                 Toast.LENGTH_LONG).show();
+    }
+
+    public void cryptoInvoiceList(View view){
+
+        Intent intent = new Intent(getApplicationContext(), AffiliateInvoiceActivity.class);
+        intent.putExtra("owner", username);
+        intent.putExtra("crypto", true);
+        startActivity(intent);
+    }
+
+    public void paypalInvoiceList(View view){
+        Intent intent = new Intent(getApplicationContext(), AffiliateInvoiceActivity.class);
+        intent.putExtra("owner", username);
+        intent.putExtra("crypto", false);
+        startActivity(intent);
     }
 
     @Override

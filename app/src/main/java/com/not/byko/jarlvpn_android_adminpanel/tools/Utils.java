@@ -11,10 +11,9 @@ import java.util.Calendar;
 
 public class Utils {
 
-    public static void saveConfigAsFile(Context context, String fileName, String content, String childName){
+    public static void saveConfigAsFile(Context context, String fileName, String content){
         try {
-            File root = new File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    childName);
+            File root = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
             if (!root.exists()) {
                 root.mkdirs();
             }

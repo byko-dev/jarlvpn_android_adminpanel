@@ -67,7 +67,7 @@ public class ConfigActivity extends AppCompatActivity {
         ConfigResponse configResponse = webController.getConfigContent(usernameId, confNameStr, view);
 
         Utils.saveConfigAsFile(view.getContext(), configResponse.getConfigName() + ".conf",
-                configResponse.getConfigContext(), "JarlVpnConfigs");
+                configResponse.getConfigContext());
     }
 
     public void createQrCode(View view){

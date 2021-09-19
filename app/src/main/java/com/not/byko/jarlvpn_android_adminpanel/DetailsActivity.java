@@ -18,13 +18,17 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_details);
+
         setTitle("JarlVPN - new details");
 
         TextView oneMonthPriceTextView = findViewById(R.id.textView27);
         TextView sixMonthsDiscountTextView = findViewById(R.id.textView28);
-
-        Intent intent = getIntent();
 
         oneMonthPriceTextView.setText("One month price: " + intent.getStringExtra("oneMonthPrice"));
         sixMonthsDiscountTextView.setText("Six months discount: " + intent.getStringExtra("sixMonthsValue"));

@@ -1,11 +1,8 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,15 +14,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigResponse;
 import com.not.byko.jarlvpn_android_adminpanel.tools.Utils;
 import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -42,6 +34,11 @@ public class ConfigActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_config);
         setTitle("JarlVPN - configuration");
 
@@ -50,8 +47,6 @@ public class ConfigActivity extends AppCompatActivity {
         TextView confName = findViewById(R.id.textView18);
         TextView orgConfName = findViewById(R.id.textView19);
         qrCodeIV = findViewById(R.id.idIVQrcode);
-
-        Intent intent = getIntent();
 
         usernameId = intent.getStringExtra("ownerId");
         confNameStr = intent.getStringExtra("confName");

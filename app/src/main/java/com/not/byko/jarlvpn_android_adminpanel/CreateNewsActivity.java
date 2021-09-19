@@ -1,5 +1,6 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,11 @@ public class CreateNewsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_create_news);
         setTitle("JarlVPN - new news");
 

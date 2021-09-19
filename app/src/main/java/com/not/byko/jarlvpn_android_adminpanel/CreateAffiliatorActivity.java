@@ -21,13 +21,17 @@ public class CreateAffiliatorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_create_affiliator);
         setTitle("JarlVPN - new partner");
 
         TextView usernameTextView = findViewById(R.id.textView53);
         promoCodeEditText = findViewById(R.id.editTextTextPersonName4);
 
-        Intent intent = getIntent();
         username = intent.getStringExtra("username");
 
         usernameTextView.setText("Selected user: " + username);

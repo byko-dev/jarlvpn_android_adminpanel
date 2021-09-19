@@ -14,6 +14,11 @@ public class InvoiceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_invoice);
         setTitle("JarlVPN - Invoice details");
 
@@ -24,8 +29,6 @@ public class InvoiceActivity extends AppCompatActivity {
         TextView cryptocurrencyTextView = findViewById(R.id.textView64);
         TextView paidInvoiceTextView = findViewById(R.id.textView65);
         TextView purchaseDateTextView = findViewById(R.id.textView66);
-
-        Intent intent = getIntent();
 
         ownerTextView.setText("Invoice owner: " + intent.getStringExtra("ownersMail"));
         priceTextView.setText("Price: " + intent.getFloatExtra("price", 0.00f));

@@ -19,15 +19,19 @@ public class UserActivity extends AppCompatActivity {
 
     private WebController webController;
     private String username;
+    private boolean darkMode;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
-        setTitle("JarlVPN - user details");
 
         Intent intent = getIntent();
+        darkMode = intent.getBooleanExtra("darkMode", false);
+        if(darkMode) setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
+        setContentView(R.layout.activity_user);
+        setTitle("JarlVPN - user details");
 
         username = intent.getStringExtra("username");
 
@@ -68,12 +72,14 @@ public class UserActivity extends AppCompatActivity {
     public void changePassword(View view){
         Intent intent = new Intent(view.getContext(), ChangePasswordActivity.class);
         intent.putExtra("username", username);
+        intent.putExtra("darkMode", darkMode);
         startActivity(intent);
     }
 
     public void setAffiliator(View view){
         Intent intent = new Intent(view.getContext(), CreateAffiliatorActivity.class);
         intent.putExtra("username", username);
+        intent.putExtra("darkMode", darkMode);
         startActivity(intent);
     }
 

@@ -24,6 +24,11 @@ public class ServerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_server);
         setTitle("JarlVPN - server details");
 
@@ -38,8 +43,6 @@ public class ServerActivity extends AppCompatActivity {
         TextView hostingTextView = findViewById(R.id.textView41);
         TextView passphraseTextView = findViewById(R.id.textView42);
         CheckBox wipeWgCheckBox = findViewById(R.id.checkBox2);
-
-        Intent intent = getIntent();
 
         ipAddress = intent.getStringExtra("ipAddress");
 

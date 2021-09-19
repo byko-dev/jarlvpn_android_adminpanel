@@ -25,16 +25,18 @@ public class ChangePasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_change_password);
         setTitle("JarlVPN - new password");
-
 
         TextView usernameTextView = findViewById(R.id.textView52);
         passwordEditText = findViewById(R.id.editTextTextPassword2);
         retypePasswordEditText = findViewById(R.id.editTextTextPassword3);
         CheckBox hidePasswordCheckBox = findViewById(R.id.checkBox3);
-
-        Intent intent = getIntent();
 
         username = intent.getStringExtra("username");
 

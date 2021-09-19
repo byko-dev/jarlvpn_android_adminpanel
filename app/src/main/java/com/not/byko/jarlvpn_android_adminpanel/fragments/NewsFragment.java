@@ -72,6 +72,7 @@ public class NewsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreateNewsActivity.class);
+                intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }
         });

@@ -21,10 +21,13 @@ public class PromoCodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_promo_code);
-        setTitle("JarlVPN - code details");
 
         Intent intent = getIntent();
+        if(intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
+        setContentView(R.layout.activity_promo_code);
+        setTitle("JarlVPN - code details");
 
         TextView codeTextView = findViewById(R.id.textView20);
         TextView percentageTextView = findViewById(R.id.textView21);

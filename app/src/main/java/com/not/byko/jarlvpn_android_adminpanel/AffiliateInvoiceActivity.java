@@ -26,9 +26,12 @@ public class AffiliateInvoiceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_affiliate_invoice);
 
         Intent intent = getIntent();
+        if(intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
+        setContentView(R.layout.activity_affiliate_invoice);
 
         String owner = intent.getStringExtra("owner");
         Boolean crypto = intent.getBooleanExtra("crypto",false);

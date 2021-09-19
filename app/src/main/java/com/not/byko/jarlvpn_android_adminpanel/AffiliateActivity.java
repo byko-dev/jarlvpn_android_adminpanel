@@ -21,10 +21,16 @@ public class AffiliateActivity extends AppCompatActivity {
 
     private String username;
     private WebController webController;
+    private boolean darkMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        darkMode = intent.getBooleanExtra("darkMode", false);
+        if(darkMode) setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_affiliate);
 
         setTitle("JarlVPN - Partner");
@@ -34,7 +40,7 @@ public class AffiliateActivity extends AppCompatActivity {
         TextView withdrawValueTextView = findViewById(R.id.textView69);
         TextView discountCodeTextView = findViewById(R.id.textView70);
 
-        Intent intent = getIntent();
+
         webController = new WebController();
 
         username = intent.getStringExtra("username");
@@ -63,6 +69,7 @@ public class AffiliateActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), AffiliateInvoiceActivity.class);
         intent.putExtra("owner", username);
         intent.putExtra("crypto", true);
+        intent.putExtra("darkMode", darkMode);
         startActivity(intent);
     }
 
@@ -70,6 +77,7 @@ public class AffiliateActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), AffiliateInvoiceActivity.class);
         intent.putExtra("owner", username);
         intent.putExtra("crypto", false);
+        intent.putExtra("darkMode", darkMode);
         startActivity(intent);
     }
 

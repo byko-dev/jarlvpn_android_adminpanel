@@ -94,6 +94,7 @@ public class PromoCodesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreateDiscountCodeActivity.class);
+                intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }
         });

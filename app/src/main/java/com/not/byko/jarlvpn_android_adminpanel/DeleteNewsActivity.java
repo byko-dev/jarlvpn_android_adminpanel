@@ -19,14 +19,17 @@ public class DeleteNewsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra("darkMode", false))
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
         setContentView(R.layout.activity_delete_news);
         setTitle("JarlVPN - news");
 
         TextView idTextView = findViewById(R.id.textView44);
         TextView newsContextTextView = findViewById(R.id.textView45);
         TextView dateTextView = findViewById(R.id.textView46);
-
-        Intent intent = getIntent();
 
         newsId = intent.getStringExtra("id");
 

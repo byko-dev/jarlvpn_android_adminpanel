@@ -28,12 +28,18 @@ public class ServersFragment extends Fragment {
 
 
     private ImageAdapter imageAdapter;
+    private boolean darkMode;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.servers_fragment, container, false);
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.servers_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        darkMode = bundle.getBoolean("darkMode");
+
+        return view;
     }
 
 
@@ -73,6 +79,7 @@ public class ServersFragment extends Fragment {
                 intent.putExtra("hosting", servers.get(position).getHosting());
                 intent.putExtra("passphrase", servers.get(position).getPassphrase());
                 intent.putExtra("id", servers.get(position).getId());
+                intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }
         });

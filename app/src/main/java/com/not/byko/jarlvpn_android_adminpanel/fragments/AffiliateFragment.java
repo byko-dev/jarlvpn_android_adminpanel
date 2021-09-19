@@ -26,13 +26,18 @@ import java.util.List;
 public class AffiliateFragment extends Fragment {
 
     private ArrayAdapter<String> arrayAdapter;
-
+    private boolean darkMode;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.affiliate_fragment, container, false);
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.affiliate_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        darkMode = bundle.getBoolean("darkMode");
+
+        return view;
     }
 
 
@@ -54,6 +59,7 @@ public class AffiliateFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getActivity(), AffiliateActivity.class);
                 intent.putExtra("username", affiliatePartnersList.get(position));
+                intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }
         });

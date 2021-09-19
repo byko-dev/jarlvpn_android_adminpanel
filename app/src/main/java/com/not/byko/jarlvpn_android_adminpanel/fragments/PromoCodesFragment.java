@@ -30,12 +30,18 @@ public class PromoCodesFragment extends Fragment {
 
     private SearchableAdapter searchableAdapter;
     private ListView listView;
+    private boolean darkMode;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.promo_code_fragment, container, false);
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.promo_code_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        darkMode = bundle.getBoolean("darkMode");
+
+        return view;
     }
 
     @Override
@@ -76,6 +82,7 @@ public class PromoCodesFragment extends Fragment {
                 intent.putExtra("usedTimes", String.valueOf(discountCodeList.get(position).getUsedTimes()));
                 intent.putExtra("plan", discountCodeList.get(position).getPlan());
                 intent.putExtra("billing", translateBillingCode(discountCodeList.get(position).getBilling()));
+                intent.putExtra("darkMode", darkMode);
 
                 startActivity(intent);
             }

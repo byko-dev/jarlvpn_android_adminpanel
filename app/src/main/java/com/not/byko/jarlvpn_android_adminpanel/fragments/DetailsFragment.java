@@ -24,13 +24,18 @@ public class DetailsFragment extends Fragment {
 
     private Float oneMonthPriceValue;
     private Integer sixMonthsDiscountValue;
-
+    private boolean darkMode;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.details_fragment, container, false);
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.details_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        darkMode = bundle.getBoolean("darkMode");
+
+        return view;
     }
 
     @Override
@@ -70,8 +75,6 @@ public class DetailsFragment extends Fragment {
         todayPaypal.setText("Today paypal invoices created: " + webConfig.getTodayPaypalInvoices());
         todayCrypto.setText("Today crypto invoices created: " + webConfig.getTodayCryptoInvoices());
 
-
-
         Button button = getView().findViewById(R.id.button10);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +82,7 @@ public class DetailsFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra("oneMonthPrice", oneMonthPriceValue.toString());
                 intent.putExtra("sixMonthsValue", sixMonthsDiscountValue.toString());
+                intent.putExtra("darkMode", darkMode);
 
                 startActivity(intent);
             }

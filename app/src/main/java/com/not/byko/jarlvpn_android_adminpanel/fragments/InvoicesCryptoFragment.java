@@ -27,12 +27,18 @@ import java.util.List;
 public class InvoicesCryptoFragment extends Fragment {
 
     private InvoiceAdapter searchableAdapter;
+    private boolean darkMode;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.invoices_crypto_fragment, container, false);
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.invoices_crypto_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        darkMode = bundle.getBoolean("darkMode");
+
+        return view;
     }
 
     @Override
@@ -69,6 +75,7 @@ public class InvoicesCryptoFragment extends Fragment {
                 intent.putExtra("purchaseDate", allCryptoInvoicesList.get(position).getPurchaseDate());
                 intent.putExtra("subType", allCryptoInvoicesList.get(position).getSubType());
                 intent.putExtra("price", allCryptoInvoicesList.get(position).getPrice());
+                intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }
         });

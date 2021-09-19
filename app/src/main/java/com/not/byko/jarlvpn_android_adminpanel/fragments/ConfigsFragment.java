@@ -27,12 +27,18 @@ import java.util.List;
 public class ConfigsFragment extends Fragment {
 
     private SearchableAdapter searchableAdapter;
+    private boolean darkMode;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.configs_fragment, container, false);
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.configs_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        darkMode = bundle.getBoolean("darkMode");
+
+        return view;
     }
 
     @Override
@@ -65,6 +71,7 @@ public class ConfigsFragment extends Fragment {
                 intent.putExtra("ownerMail", configsList.get(position).getOwnerMail());
                 intent.putExtra("orgConfName", configsList.get(position).getOrgConfName());
                 intent.putExtra("serverIp", configsList.get(position).getServerIp());
+                intent.putExtra("darkMode", darkMode);
 
                 startActivity(intent);
             }

@@ -29,12 +29,18 @@ import java.util.List;
 public class InvoicesFragment extends Fragment {
 
     private InvoiceAdapter searchableAdapter;
+    private boolean darkMode;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.invoices_fragment, container, false);
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.invoices_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        darkMode = bundle.getBoolean("darkMode");
+
+        return view;
     }
 
     @Override
@@ -72,6 +78,7 @@ public class InvoicesFragment extends Fragment {
                 intent.putExtra("subType", allPaypalInvoicesList.get(position).getSubType());
                 intent.putExtra("price", allPaypalInvoicesList.get(position).getPrice());
                 intent.putExtra("cryptocurrency", "");
+                intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }
         });

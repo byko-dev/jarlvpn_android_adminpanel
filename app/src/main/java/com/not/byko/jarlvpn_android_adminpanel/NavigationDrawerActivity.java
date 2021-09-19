@@ -1,8 +1,10 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
 import android.content.Intent;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -32,6 +34,9 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     private DrawerLayout drawerLayout;
     private static TextView username_admin;
+    private boolean darkMode;
+    private Bundle bundle;
+    private DetailsFragment detailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +44,16 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
         //call setTheme before render activity
         Intent thisIntent = getIntent();
-        if(thisIntent.getBooleanExtra("darkMode", false)) setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+        darkMode = thisIntent.getBooleanExtra("darkMode", false);
+        if(darkMode) setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+
+        bundle = new Bundle();
+        bundle.putBoolean("darkMode", darkMode);
 
         setContentView(R.layout.activity_navigation_drawer);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -60,8 +68,12 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
         toggle.syncState();
 
         if (savedInstanceState == null) {
+            detailsFragment = new DetailsFragment();
+            detailsFragment.setArguments(bundle);
+
+            setTitle("JarlVPN - Details");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new DetailsFragment()).commit();
+                    detailsFragment).commit();
             navigationView.setCheckedItem(R.id.nav_details);
         }
 
@@ -87,51 +99,86 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
+
+
+
         switch (menuItem.getItemId()){
             case R.id.nav_details:
                 setTitle("JarlVPN - Details");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new DetailsFragment()).commit();
+                        detailsFragment).commit();
                 break;
             case R.id.nav_users:
                 setTitle("JarlVPN - Users");
+
+                UsersFragment usersFragment = new UsersFragment();
+                usersFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new UsersFragment()).commit();
+                        usersFragment).commit();
                 break;
             case R.id.nav_servers:
                 setTitle("JarlVPN - Servers");
+
+                ServersFragment serversFragment = new ServersFragment();
+                serversFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ServersFragment()).commit();
+                        serversFragment).commit();
                 break;
             case R.id.nav_configs:
                 setTitle("JarlVPN - Configurations");
+
+                ConfigsFragment configsFragment = new ConfigsFragment();
+                configsFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ConfigsFragment()).commit();
+                        configsFragment).commit();
                 break;
             case R.id.nav_codes:
                 setTitle("JarlVPN - Promo codes");
+
+                PromoCodesFragment promoCodesFragment = new PromoCodesFragment();
+                promoCodesFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new PromoCodesFragment()).commit();
+                        promoCodesFragment).commit();
                 break;
             case R.id.nav_affiliate:
                 setTitle("JarlVPN - Partners");
+
+                AffiliateFragment affiliateFragment = new AffiliateFragment();
+                affiliateFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new AffiliateFragment()).commit();
+                        affiliateFragment).commit();
                 break;
             case R.id.nav_news:
                 setTitle("JarlVPN - News");
+
+                NewsFragment newsFragment = new NewsFragment();
+                newsFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new NewsFragment()).commit();
+                        newsFragment).commit();
                 break;
             case R.id.nav_invoices:
                 setTitle("JarlVPN - Paypal");
+
+                InvoicesFragment invoicesFragment = new InvoicesFragment();
+                invoicesFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new InvoicesFragment()).commit();
+                        invoicesFragment).commit();
                 break;
             case R.id.nav_invoices_crypto:
                 setTitle("JarlVPN - Crypto");
+
+                InvoicesCryptoFragment invoicesCryptoFragment = new InvoicesCryptoFragment();
+                invoicesCryptoFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new InvoicesCryptoFragment()).commit();
+                        invoicesCryptoFragment).commit();
                 break;
             case R.id.nav_logout:
                 WebController.logout();

@@ -30,12 +30,18 @@ import java.util.List;
 public class NewsFragment extends Fragment {
 
     private SearchableAdapter searchableAdapter;
+    private boolean darkMode;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.news_fragment, container, false);
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.news_fragment, container, false);
+
+        Bundle bundle =  getArguments();
+        darkMode = bundle.getBoolean("darkMode");
+
+        return view;
     }
 
 
@@ -77,6 +83,7 @@ public class NewsFragment extends Fragment {
                 intent.putExtra("id", newsListResponseList.get(position).getNewsId());
                 intent.putExtra("newsContent", newsListResponseList.get(position).getNewsContent());
                 intent.putExtra("newsDate", newsListResponseList.get(position).getNewsDate());
+                intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }
         });

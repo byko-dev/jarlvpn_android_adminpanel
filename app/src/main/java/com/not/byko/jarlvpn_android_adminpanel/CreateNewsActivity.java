@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -41,9 +43,29 @@ public class CreateNewsActivity extends AppCompatActivity {
     }
 
     public void createNewNews(View view){
-        WebController webController = new WebController();
-        Toast.makeText(view.getContext(),
-                webController.createNews(editText.getText().toString()).getMessage(), Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Create new news");
+        builder.setMessage("Are you sure you want to add new news?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        WebController webController = new WebController();
+                        Toast.makeText(view.getContext(),
+                                webController.createNews(editText.getText().toString()).getMessage(), Toast.LENGTH_SHORT).show();
+                        //back to news fragment //TODO: update news fragment after changes
+                        onBackPressed();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

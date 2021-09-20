@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -38,11 +40,28 @@ public class CreateAffiliatorActivity extends AppCompatActivity {
     }
 
     public void newAffiliatePartner(View view){
-        WebController webController = new WebController();
-
-        Toast.makeText(view.getContext(),
-                webController.createNewAffiliator(username, promoCodeEditText.getText().toString()).getMessage(),
-                Toast.LENGTH_LONG).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Add affiliate permission");
+        builder.setMessage("Are you sure add affiliate permission for user: " + username + "?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        WebController webController = new WebController();
+                        Toast.makeText(view.getContext(),
+                                webController.createNewAffiliator(username, promoCodeEditText.getText().toString()).getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

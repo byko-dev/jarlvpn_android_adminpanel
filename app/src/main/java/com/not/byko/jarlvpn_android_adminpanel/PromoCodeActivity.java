@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -48,9 +50,28 @@ public class PromoCodeActivity extends AppCompatActivity {
     }
 
     public void deleteDiscountCode(View view){
-        WebController webController = new WebController();
-        Toast.makeText(view.getContext(), webController.deleteCode(code, view).getMessage(), Toast.LENGTH_LONG).show();
-        super.onBackPressed();
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Delete discount code");
+        builder.setMessage("Are you sure to delete discount code: "+code+"?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        WebController webController = new WebController();
+                        Toast.makeText(view.getContext(), webController.deleteCode(code, view).getMessage(), Toast.LENGTH_LONG).show();
+                        //back to discount codes fragment //TODO: update discount codes
+                        onBackPressed();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 

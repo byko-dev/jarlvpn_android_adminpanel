@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -35,17 +37,37 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     public void changeConfiguration(View view){
-        EditText sixMonthPriceEditText = findViewById(R.id.editTextNumber2);
-        EditText oneMonthPriceEditText = findViewById(R.id.editTextNumber);
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Change details JarlVPN");
+        builder.setMessage("Are you sure you want to change JarlVPN prices?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText sixMonthPriceEditText = findViewById(R.id.editTextNumber2);
+                        EditText oneMonthPriceEditText = findViewById(R.id.editTextNumber);
 
-        WebController webController = new WebController();
+                        WebController webController = new WebController();
 
-        String message = webController.setGutConfig(oneMonthPriceEditText.getText().toString().isEmpty() ? null :
-                        Float.parseFloat(oneMonthPriceEditText.getText().toString()),
-                sixMonthPriceEditText.getText().toString().isEmpty() ? null :
-                        Integer.parseInt(sixMonthPriceEditText.getText().toString())).getMessage();
+                        String message = webController.setGutConfig(oneMonthPriceEditText.getText().toString().isEmpty() ? null :
+                                        Float.parseFloat(oneMonthPriceEditText.getText().toString()),
+                                sixMonthPriceEditText.getText().toString().isEmpty() ? null :
+                                        Integer.parseInt(sixMonthPriceEditText.getText().toString())).getMessage();
 
-        Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+                        //back to details fragment //TODO: update details fragment after changes
+                        onBackPressed();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

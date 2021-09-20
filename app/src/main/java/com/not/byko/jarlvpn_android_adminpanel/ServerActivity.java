@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -69,8 +71,26 @@ public class ServerActivity extends AppCompatActivity {
     }
 
     public void resetServer(View view){
-        Toast.makeText(view.getContext(), webController.resetServer(ipAddress).getMessage(),
-                Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Reset server");
+        builder.setMessage("Are you sure to reset server: "+ipAddress+"?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(view.getContext(), webController.resetServer(ipAddress).getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void downloadPrivateKey(View view){
@@ -81,13 +101,49 @@ public class ServerActivity extends AppCompatActivity {
     }
 
     public void refundServer(View view){
-        Toast.makeText(view.getContext(), webController.refundServer(ipAddress).getMessage(),
-                Toast.LENGTH_LONG).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Refund server");
+        builder.setMessage("Are you sure to refund server: "+ipAddress+"?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(view.getContext(), webController.refundServer(ipAddress).getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void deleteServer(View view){
-        Toast.makeText(view.getContext(), webController.deleteServer(ipAddress, wipeWg).getMessage(),
-                Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Delete server");
+        builder.setMessage("Are you sure to delete server: "+ipAddress+" from base?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(view.getContext(), webController.deleteServer(ipAddress, wipeWg).getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

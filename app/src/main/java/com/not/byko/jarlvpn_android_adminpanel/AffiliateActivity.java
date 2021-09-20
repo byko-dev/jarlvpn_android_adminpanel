@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -54,14 +56,52 @@ public class AffiliateActivity extends AppCompatActivity {
     }
 
     public void resetAffiliate(View view){
-        Toast.makeText(view.getContext(),
-                webController.resetWithdrawValue(username).getMessage(), Toast.LENGTH_LONG).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Reset affiliate partner scores");
+        builder.setMessage("Are you sure to reset affiliate partner: "+username+" withdraw value?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(view.getContext(),
+                                webController.resetWithdrawValue(username).getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void deleteAffiliatePermission(View view){
-        Toast.makeText(view.getContext(),
-                webController.deleteAffiliatePermission(username).getMessage(),
-                Toast.LENGTH_LONG).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Delete affiliate permission");
+        builder.setMessage("Are you sure to delete affiliate permission for user: " + username + "?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(view.getContext(),
+                                webController.deleteAffiliatePermission(username).getMessage(),
+                                Toast.LENGTH_LONG).show();
+                        //back to affiliate fragment //TODO: update affiliate fragment
+                        onBackPressed();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void cryptoInvoiceList(View view){

@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -53,14 +55,34 @@ public class CreateDiscountCodeActivity extends AppCompatActivity {
     }
 
     public void createDiscountCode(View view){
-        WebController webController = new WebController();
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Create new discount code");
+        builder.setMessage("Are you sure you want to add new discount code: "+promoCode.getText()+"?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        WebController webController = new WebController();
 
-        Toast.makeText(view.getContext(),
-                webController.createNewDiscountCode(promoCode.getText().toString(),
-                        Integer.parseInt(percentage.getText().toString()),
-                        translateBillingStr(spinner.getSelectedItem().toString()),
-                        spinner2.getSelectedItem().toString()).getMessage(),
-                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(),
+                                webController.createNewDiscountCode(promoCode.getText().toString(),
+                                        Integer.parseInt(percentage.getText().toString()),
+                                        translateBillingStr(spinner.getSelectedItem().toString()),
+                                        spinner2.getSelectedItem().toString()).getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                        //back to discount fragment //TODO: update discount fragment after changes
+                        onBackPressed();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private int translateBillingStr(String billing){

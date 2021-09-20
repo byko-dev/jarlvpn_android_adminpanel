@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -39,9 +41,30 @@ public class DeleteNewsActivity extends AppCompatActivity {
     }
 
     public void deleteNews(View view){
-        WebController webController = new WebController();
-        Toast.makeText(view.getContext(), webController.deleteNews(newsId).getMessage(),
-                Toast.LENGTH_SHORT).show();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Delete news");
+        builder.setMessage("Are you sure you want to remove this news?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        WebController webController = new WebController();
+                        Toast.makeText(view.getContext(), webController.deleteNews(newsId).getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                        //back to news fragment //TODO: and update table
+                        onBackPressed();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                //Do nothing
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

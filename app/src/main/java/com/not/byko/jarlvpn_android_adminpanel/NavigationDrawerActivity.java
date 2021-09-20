@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Telephony;
 import android.support.annotation.NonNull;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.not.byko.jarlvpn_android_adminpanel.fragments.AffiliateFragment;
 import com.not.byko.jarlvpn_android_adminpanel.fragments.ConfigsFragment;
@@ -98,10 +101,6 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-
-
-
         switch (menuItem.getItemId()){
             case R.id.nav_details:
                 setTitle("JarlVPN - Details");
@@ -181,10 +180,29 @@ public class NavigationDrawerActivity extends AppCompatActivity implements Navig
                         invoicesCryptoFragment).commit();
                 break;
             case R.id.nav_logout:
-                WebController.logout();
-                setContentView(R.layout.activity_main);
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                builder.setCancelable(true);
+                builder.setTitle("Really exit?");
+                builder.setMessage("Are you sure you want to exit?");
+                builder.setPositiveButton("Confirm",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                WebController.logout();
+                                setContentView(R.layout.activity_main);
+                                Intent intent = new Intent(NavigationDrawerActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int witch){
+                        //do nothing
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -1,5 +1,7 @@
 package com.not.byko.jarlvpn_android_adminpanel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -57,14 +59,32 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     public void changePasswordForUser(View view){
-        if(passwordEditText.getText().toString().equals(retypePasswordEditText.getText().toString())){
-            WebController webController = new WebController();
-            Toast.makeText(view.getContext(),
-                    webController.changePasswordForUser(username, passwordEditText.getText().toString()).getMessage(),
-                    Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(view.getContext(), "Passwords don't match", Toast.LENGTH_SHORT).show();
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Change password");
+        builder.setMessage("Are you sure to change password for user: " + username + "?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(passwordEditText.getText().toString().equals(retypePasswordEditText.getText().toString())){
+                            WebController webController = new WebController();
+                            Toast.makeText(view.getContext(),
+                                    webController.changePasswordForUser(username, passwordEditText.getText().toString()).getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(view.getContext(), "Passwords doesn't match", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int witch){
+                Toast.makeText(view.getContext(), "Password don't changed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

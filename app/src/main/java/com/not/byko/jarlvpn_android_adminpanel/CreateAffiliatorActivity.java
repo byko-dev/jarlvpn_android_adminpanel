@@ -26,7 +26,7 @@ public class CreateAffiliatorActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if(intent.getBooleanExtra("darkMode", false))
-            setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+            setTheme(R.style.Theme_AppCompat_Dark);
 
         setContentView(R.layout.activity_create_affiliator);
         setTitle("JarlVPN - new partner");

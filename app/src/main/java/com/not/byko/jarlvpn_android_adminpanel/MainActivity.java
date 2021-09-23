@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
     private static final String KEY_USERNAME = "username";
     private static final String PREF_NAME = "pref";
     private static final String KEY_REMEMBER = "remember";
+    private static final String KEY_DARK_MODE = "dark_mode";
 
     private String captchaResponse;
 
@@ -67,10 +68,12 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
 
         login.setText(sharedPreferences.getString(KEY_USERNAME, ""));
         password.setText(sharedPreferences.getString(KEY_PASS, ""));
+        darkModeCheckBox.setChecked(sharedPreferences.getBoolean(KEY_DARK_MODE, false));
 
         login.addTextChangedListener(this);
         password.addTextChangedListener(this);
         checkBox.setOnCheckedChangeListener(this);
+        darkModeCheckBox.setOnCheckedChangeListener(this);
 
         //captcha executor
         CheckBox checkBoxCaptcha = findViewById(R.id.checkBox33);
@@ -98,10 +101,12 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
                                     int statusCode = apiException.getStatusCode();
                                     Toast.makeText(getApplicationContext(), "Invalid Captcha! Code: " + statusCode,
                                             Toast.LENGTH_LONG).show();
+                                    checkBoxCaptcha.setChecked(false);
                                 } else {
                                     // A different, unknown type of error occurred.
                                     Toast.makeText(getApplicationContext(), "Captcha error!",
                                             Toast.LENGTH_LONG).show();
+                                    checkBoxCaptcha.setChecked(false);
                                 }
                             }
                         });
@@ -128,10 +133,12 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
             editor.putString(KEY_USERNAME, login.getText().toString().trim());
             editor.putString(KEY_PASS, password.getText().toString().trim());
             editor.putBoolean(KEY_REMEMBER, true);
+            editor.putBoolean(KEY_DARK_MODE, darkModeCheckBox.isChecked());
         }else{
             editor.putBoolean(KEY_REMEMBER, false);
             editor.remove(KEY_PASS);
             editor.remove(KEY_USERNAME);
+            editor.remove(KEY_DARK_MODE);
         }
         editor.apply();
     }

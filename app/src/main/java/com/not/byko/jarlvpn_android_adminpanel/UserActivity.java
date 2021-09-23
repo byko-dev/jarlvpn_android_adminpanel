@@ -30,7 +30,7 @@ public class UserActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         darkMode = intent.getBooleanExtra("darkMode", false);
-        if(darkMode) setTheme(R.style.Theme_AppCompat_Light_NoActionBar_Dark);
+        if(darkMode) setTheme(R.style.Theme_AppCompat_Dark);
 
         setContentView(R.layout.activity_user);
         setTitle("JarlVPN - user details");

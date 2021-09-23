@@ -44,10 +44,15 @@ public class UsersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         WebController webController = new WebController();
 
-        List<String> list = webController.getUsersList(view);
+        List<String> list = webController.getUsersList(getView());
 
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
 

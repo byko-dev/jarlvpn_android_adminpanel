@@ -44,10 +44,15 @@ public class AffiliateFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         WebController webController = new WebController();
 
-        List<String> affiliatePartnersList = webController.getAffiliates(view);
+        List<String> affiliatePartnersList = webController.getAffiliates(getView());
 
         ListView listView = getView().findViewById(R.id.affiliate_listView);
         arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, affiliatePartnersList);

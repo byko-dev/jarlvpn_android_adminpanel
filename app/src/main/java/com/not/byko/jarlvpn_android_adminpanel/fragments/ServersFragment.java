@@ -46,12 +46,17 @@ public class ServersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         WebController webController = new WebController();
 
         List<String> serverIP = new ArrayList<>();
         List<Integer> serverCountryImageCode = new ArrayList<>();
-        List<ServersListResponse> servers = webController.getServerList(view);
+        List<ServersListResponse> servers = webController.getServerList(getView());
 
         for(ServersListResponse serversListResponse : servers){
             serverIP.add(serversListResponse.getIpAddress() +
@@ -83,9 +88,7 @@ public class ServersFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

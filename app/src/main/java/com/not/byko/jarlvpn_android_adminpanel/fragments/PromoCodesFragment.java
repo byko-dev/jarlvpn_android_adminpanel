@@ -98,8 +98,6 @@ public class PromoCodesFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-
     }
 
     private String translateBillingCode(Integer billing){

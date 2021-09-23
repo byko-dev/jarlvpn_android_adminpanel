@@ -44,9 +44,14 @@ public class ConfigsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         WebController webController = new WebController();
-        List<Configs> configsList = webController.getWireGuardConfigurations(view);
+        List<Configs> configsList = webController.getWireGuardConfigurations(getView());
         List<String> confNameAndOwner = new ArrayList<>();
         List<String> serverIp = new ArrayList<>();
 
@@ -76,9 +81,7 @@ public class ConfigsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

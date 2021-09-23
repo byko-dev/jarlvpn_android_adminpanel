@@ -46,13 +46,20 @@ public class InvoicesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         WebController webController = new WebController();
 
         List<String> ownersMail = new ArrayList<>();
         List<String> transactionId = new ArrayList<>();
         List<Boolean> paidInvoice = new ArrayList<>();
 
-        List<AllPaypalInvoices> allPaypalInvoicesList = webController.getAllPaypalInvoices(view);
+        List<AllPaypalInvoices> allPaypalInvoicesList = webController.getAllPaypalInvoices(getView());
 
         for (AllPaypalInvoices paypalInvoices: allPaypalInvoicesList){
             ownersMail.add(paypalInvoices.getOwnerMail());
@@ -62,7 +69,7 @@ public class InvoicesFragment extends Fragment {
 
         ListView listView = getView().findViewById(R.id.paypal_listView);
 
-        searchableAdapter = new InvoiceAdapter(getContext(), ownersMail, transactionId, paidInvoice, view);
+        searchableAdapter = new InvoiceAdapter(getContext(), ownersMail, transactionId, paidInvoice, getView());
 
         listView.setAdapter(searchableAdapter);
 

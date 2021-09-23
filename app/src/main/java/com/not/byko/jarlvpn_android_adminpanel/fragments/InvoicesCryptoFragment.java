@@ -44,13 +44,19 @@ public class InvoicesCryptoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         WebController webController = new WebController();
 
         List<String> ownersMail = new ArrayList<>();
         List<String> transactionId = new ArrayList<>();
         List<Boolean> paidInvoice = new ArrayList<>();
 
-        List<AllCryptoInvoices> allCryptoInvoicesList = webController.getAllCryptoInvoices(view);
+        List<AllCryptoInvoices> allCryptoInvoicesList = webController.getAllCryptoInvoices(getView());
 
         for (AllCryptoInvoices cryptoInvoices : allCryptoInvoicesList){
             ownersMail.add(cryptoInvoices.getOwnerMail());
@@ -60,7 +66,7 @@ public class InvoicesCryptoFragment extends Fragment {
 
         ListView listView = getView().findViewById(R.id.crypto_listView);
 
-        searchableAdapter = new InvoiceAdapter(getContext(), ownersMail, transactionId, paidInvoice, view);
+        searchableAdapter = new InvoiceAdapter(getContext(), ownersMail, transactionId, paidInvoice, getView());
 
         listView.setAdapter(searchableAdapter);
 

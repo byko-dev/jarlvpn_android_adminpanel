@@ -41,6 +41,11 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         WebController webController = new WebController();
 
@@ -57,7 +62,7 @@ public class DetailsFragment extends Fragment {
         TextView todayPaypal = getView().findViewById(R.id.textView14);
         TextView todayCrypto = getView().findViewById(R.id.textView15);
 
-        WebConfig webConfig = webController.getDetails(view);
+        WebConfig webConfig = webController.getDetails(getView());
 
         oneMonthPriceValue = webConfig.getOneMonthPrice();
         sixMonthsDiscountValue = webConfig.getSixMonthDiscount();
@@ -88,7 +93,6 @@ public class DetailsFragment extends Fragment {
             }
         });
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

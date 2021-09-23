@@ -48,13 +48,18 @@ public class NewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         WebController webController = new WebController();
 
         List<String> newsContent = new ArrayList<>();
         List<String> newsDate = new ArrayList<>();
 
-        List<NewsListResponse> newsListResponseList = webController.getNewsList(view);
+        List<NewsListResponse> newsListResponseList = webController.getNewsList(getView());
 
 
         for(NewsListResponse newsListResponse: newsListResponseList){
@@ -89,7 +94,6 @@ public class NewsFragment extends Fragment {
             }
         });
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

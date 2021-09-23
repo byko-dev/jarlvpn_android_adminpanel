@@ -60,7 +60,7 @@ public class PromoCodeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         WebController webController = new WebController();
                         Toast.makeText(view.getContext(), webController.deleteCode(code, view).getMessage(), Toast.LENGTH_LONG).show();
-                        //back to discount codes fragment //TODO: update discount codes
+
                         onBackPressed();
                     }
                 });

@@ -56,7 +56,7 @@ public class DetailsActivity extends AppCompatActivity {
                                         Integer.parseInt(sixMonthPriceEditText.getText().toString())).getMessage();
 
                         Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
-                        //back to details fragment //TODO: update details fragment after changes
+
                         onBackPressed();
                     }
                 });

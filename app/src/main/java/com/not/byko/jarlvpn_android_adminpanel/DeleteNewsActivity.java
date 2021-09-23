@@ -53,7 +53,7 @@ public class DeleteNewsActivity extends AppCompatActivity {
                         WebController webController = new WebController();
                         Toast.makeText(view.getContext(), webController.deleteNews(newsId).getMessage(),
                                 Toast.LENGTH_SHORT).show();
-                        //back to news fragment //TODO: and update table
+
                         onBackPressed();
                     }
                 });

@@ -54,7 +54,7 @@ public class CreateNewsActivity extends AppCompatActivity {
                         WebController webController = new WebController();
                         Toast.makeText(view.getContext(),
                                 webController.createNews(editText.getText().toString()).getMessage(), Toast.LENGTH_SHORT).show();
-                        //back to news fragment //TODO: update news fragment after changes
+
                         onBackPressed();
                     }
                 });

@@ -71,7 +71,7 @@ public class CreateDiscountCodeActivity extends AppCompatActivity {
                                         translateBillingStr(spinner.getSelectedItem().toString()),
                                         spinner2.getSelectedItem().toString()).getMessage(),
                                 Toast.LENGTH_SHORT).show();
-                        //back to discount fragment //TODO: update discount fragment after changes
+
                         onBackPressed();
                     }
                 });

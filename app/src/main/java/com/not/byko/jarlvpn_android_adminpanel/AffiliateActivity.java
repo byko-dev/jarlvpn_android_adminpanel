@@ -90,7 +90,7 @@ public class AffiliateActivity extends AppCompatActivity {
                         Toast.makeText(view.getContext(),
                                 webController.deleteAffiliatePermission(username).getMessage(),
                                 Toast.LENGTH_LONG).show();
-                        //back to affiliate fragment //TODO: update affiliate fragment
+
                         onBackPressed();
                     }
                 });

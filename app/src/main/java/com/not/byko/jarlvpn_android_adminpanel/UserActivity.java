@@ -22,6 +22,8 @@ public class UserActivity extends AppCompatActivity {
     private WebController webController;
     private String username;
     private boolean darkMode;
+    private Button blockUser;
+    private TextView userTypeTextView;
 
 
     @Override
@@ -38,7 +40,7 @@ public class UserActivity extends AppCompatActivity {
         username = intent.getStringExtra("username");
 
         webController = new WebController();
-        UserDetailsResponse detailsResponse = webController.getUserDetails(username, getApplicationContext());
+        UserDetailsResponse detailsResponse = returnUserDetails();
 
         String ipAddresses = "";
 
@@ -48,10 +50,11 @@ public class UserActivity extends AppCompatActivity {
 
         TextView usernameTextView = findViewById(R.id.textView43);
         TextView createDateTextView = findViewById(R.id.textView47);
-        TextView userTypeTextView = findViewById(R.id.textView48);
+        userTypeTextView = findViewById(R.id.textView48);
         TextView vpnActivatedTextView = findViewById(R.id.textView49);
         TextView ipAddressTextView = findViewById(R.id.textView50);
         Button setAffiliatePartner = findViewById(R.id.button28);
+        blockUser = findViewById(R.id.button22);
 
         usernameTextView.setText("Username: " + username);
         createDateTextView.setText("Account created date: " + detailsResponse.getCreateDate());
@@ -59,8 +62,10 @@ public class UserActivity extends AppCompatActivity {
         vpnActivatedTextView.setText("Active subscription: " + detailsResponse.getVpnActivated());
         ipAddressTextView.setText("Client ip addresses" + ipAddresses);
         if(detailsResponse.getAffiliatePartner()) setAffiliatePartner.setVisibility(View.GONE);
+        if(!detailsResponse.getUserType().equals("USER")) blockUser.setText("Unblock this account");
     }
 
+    //this need refresh
     public void blockUser(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setCancelable(true);
@@ -72,6 +77,12 @@ public class UserActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(view.getContext(), webController.blockUser(username).getMessage(),
                                 Toast.LENGTH_SHORT).show();
+
+                        String userType = returnUserDetails().getUserType();
+                        userTypeTextView.setText("User type: " + userType);
+
+                        if(userType.equals("USER")) blockUser.setText("Block this account");
+                        else blockUser.setText("Unblock this account");
                     }
                 });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -139,6 +150,11 @@ public class UserActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public UserDetailsResponse returnUserDetails(){
+        return webController.getUserDetails(username, getApplicationContext());
+    }
+
 
 
 }

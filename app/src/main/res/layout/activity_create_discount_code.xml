@@ -59,7 +59,6 @@
         android:id="@+id/button13"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/teal_200"
         android:onClick="createDiscountCode"
         android:text="Create discount" />
 

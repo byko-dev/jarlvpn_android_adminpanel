@@ -67,9 +67,8 @@
         android:id="@+id/button6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/teal_200"
-        android:text="Change!"
-        android:onClick="changeConfiguration"/>
+        android:onClick="changeConfiguration"
+        android:text="Change!" />
 
 
 </LinearLayout>

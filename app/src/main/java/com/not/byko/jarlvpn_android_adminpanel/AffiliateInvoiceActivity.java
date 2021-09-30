@@ -28,7 +28,8 @@ public class AffiliateInvoiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        if(intent.getBooleanExtra("darkMode", false))
+        boolean darkMode = intent.getBooleanExtra("darkMode", false);
+        if(darkMode)
             setTheme(R.style.Theme_AppCompat_Dark);
 
         setContentView(R.layout.activity_affiliate_invoice);
@@ -53,7 +54,7 @@ public class AffiliateInvoiceActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.affiliate_listView_payments);
 
         paymentsAdapter = new PaymentsAdapter(getApplicationContext(), usernameList, purchaseDateList,
-                daysList, idPaymentList);
+                daysList, idPaymentList, darkMode, getColor(R.color.white));
 
         listView.setAdapter(paymentsAdapter);
     }

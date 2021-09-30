@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, Comp
                                         String userResponseToken = response.getTokenResult();
                                         if (!userResponseToken.isEmpty()) {
                                             captchaResponse = userResponseToken;
+                                            checkBoxCaptcha.setChecked(true);
                                         }
                                     }
                                 })

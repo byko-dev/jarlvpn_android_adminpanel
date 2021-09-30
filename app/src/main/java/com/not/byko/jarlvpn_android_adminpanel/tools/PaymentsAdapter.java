@@ -21,14 +21,18 @@ public class PaymentsAdapter extends ArrayAdapter<String> {
     private List<String> daysList = null;
     private List<String> idPaymentList = null;
     private LayoutInflater mInflater;
+    private boolean darkMode;
+    private int darkModeFontColorResourceId;
 
     public PaymentsAdapter(Context context, List<String> usernameList, List<String> purchaseDate,
-                            List<String> daysList, List<String> idPaymentList) {
+                            List<String> daysList, List<String> idPaymentList, boolean darkMode, int darkModeFontColorResourceId) {
         super(context, R.layout.affiliate_payments_list_view, usernameList);
         this.usernameList = usernameList;
         this.purchaseDate = purchaseDate;
         this.daysList = daysList;
         this.idPaymentList = idPaymentList;
+        this.darkMode = darkMode;
+        this.darkModeFontColorResourceId = darkModeFontColorResourceId;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -38,6 +42,14 @@ public class PaymentsAdapter extends ArrayAdapter<String> {
         TextView purchaseTextView = rowView.findViewById(R.id.textView72);
         TextView daysTextview = rowView.findViewById(R.id.textView73);
         TextView idPaymentTextView = rowView.findViewById(R.id.textView74);
+
+        if(darkMode){
+            usernameTextView.setTextColor(darkModeFontColorResourceId);
+            purchaseTextView.setTextColor(darkModeFontColorResourceId);
+            daysTextview.setTextColor(darkModeFontColorResourceId);
+            idPaymentTextView.setTextColor(darkModeFontColorResourceId);
+        }
+
 
         usernameTextView.setText("User: " + usernameList.get(position));
         purchaseTextView.setText("Purchase date: "+ purchaseDate.get(position));

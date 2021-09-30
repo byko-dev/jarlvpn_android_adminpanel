@@ -132,6 +132,14 @@ public class UserActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void giveHimServer(View view){
+        Intent intent = new Intent(view.getContext(), GiveServerActivity.class);
+        intent.putExtra("username", username);
+        intent.putExtra("darkMode", darkMode);
+        startActivity(intent);
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_arrow);// set drawable icon

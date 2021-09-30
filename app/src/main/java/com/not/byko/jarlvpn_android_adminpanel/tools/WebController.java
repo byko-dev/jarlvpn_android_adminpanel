@@ -8,6 +8,7 @@ import com.not.byko.jarlvpn_android_adminpanel.models.AffiliateDetailsResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.AffiliatePayments;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllCryptoInvoices;
 import com.not.byko.jarlvpn_android_adminpanel.models.AllPaypalInvoices;
+import com.not.byko.jarlvpn_android_adminpanel.models.AvailableRegions;
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangeConfigRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ChangePasswordRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.ConfigRequest;
@@ -19,6 +20,7 @@ import com.not.byko.jarlvpn_android_adminpanel.models.DeleteCodeRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.DeleteNewsRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.DiscountCode;
 import com.not.byko.jarlvpn_android_adminpanel.models.DownloadPrivateKeyResponse;
+import com.not.byko.jarlvpn_android_adminpanel.models.GiveServerRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginRequest;
 import com.not.byko.jarlvpn_android_adminpanel.models.LoginResponse;
 import com.not.byko.jarlvpn_android_adminpanel.models.NewsListResponse;
@@ -478,6 +480,33 @@ public class WebController {
             return Collections.emptyList();
         }
     }
+
+    public AvailableRegions getAvailableRegions(Context context){
+        HttpEntity<?> entity = new HttpEntity(authorizedHeader());
+        try{
+            ResponseEntity<AvailableRegions> responseEntity = restTemplate.exchange(backend_api + "/available/servers",
+                    HttpMethod.GET, entity, AvailableRegions.class);
+            return responseEntity.getBody();
+        }catch (HttpClientErrorException ex){
+            Toast.makeText(context, ex.getStatusText(), Toast.LENGTH_LONG).show();
+            return new AvailableRegions();
+        }
+    }
+
+    public StatusModel giveUserForUser(String username, String regionSlug, int months){
+        GiveServerRequest giveServerRequest = new GiveServerRequest(regionSlug, months, username);
+        HttpEntity<GiveServerRequest> entity = new HttpEntity<GiveServerRequest>(giveServerRequest,
+                authorizedHeader());
+
+        try{
+            ResponseEntity<StatusModel> responseEntity = restTemplate.exchange(backend_api + "/adminpanel/server/give",
+                    HttpMethod.POST, entity, StatusModel.class);
+            return responseEntity.getBody();
+        }catch (HttpClientErrorException ex){
+            return new StatusModel(ex.getMessage());
+        }
+    }
+
 
     public static void logout(){
         jwtToken = "";

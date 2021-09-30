@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Jarlvpn_android_adminpanel"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".GiveServerActivity"
+            android:exported="true" />
+        <activity
             android:name=".AffiliateInvoiceActivity"
             android:exported="true" />
         <activity

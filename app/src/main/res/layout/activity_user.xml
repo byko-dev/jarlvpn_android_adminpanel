@@ -77,6 +77,13 @@
             android:onClick="blockUser"/>
 
         <Button
+            android:id="@+id/button16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Give server"
+            android:onClick="giveHimServer"/>
+
+        <Button
             android:id="@+id/button24"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

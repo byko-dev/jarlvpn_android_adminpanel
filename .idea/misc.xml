@@ -48,6 +48,7 @@
         <entry key="app/src/main/res/layout/activity_create_news.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_delete_news.xml" value="0.13148148148148148" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.26296296296296295" />
+        <entry key="app/src/main/res/layout/activity_give_server.xml" value="0.34791666666666665" />
         <entry key="app/src/main/res/layout/activity_invoice.xml" value="0.3020833333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_navigation_drawer.xml" value="0.29257246376811596" />

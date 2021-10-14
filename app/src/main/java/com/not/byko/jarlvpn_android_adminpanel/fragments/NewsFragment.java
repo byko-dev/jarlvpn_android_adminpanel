@@ -86,9 +86,12 @@ public class NewsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getActivity(), DeleteNewsActivity.class);
-                intent.putExtra("id", newsListResponseList.get(position).getNewsId());
-                intent.putExtra("newsContent", newsListResponseList.get(position).getNewsContent());
-                intent.putExtra("newsDate", newsListResponseList.get(position).getNewsDate());
+
+                int originalPosition = searchableAdapter.originalPosition(position);
+
+                intent.putExtra("id", newsListResponseList.get(originalPosition).getNewsId());
+                intent.putExtra("newsContent", newsListResponseList.get(originalPosition).getNewsContent());
+                intent.putExtra("newsDate", newsListResponseList.get(originalPosition).getNewsDate());
                 intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }

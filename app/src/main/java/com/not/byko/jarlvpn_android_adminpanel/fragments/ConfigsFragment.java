@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.not.byko.jarlvpn_android_adminpanel.ConfigActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
@@ -71,11 +72,13 @@ public class ConfigsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ConfigActivity.class);
 
-                intent.putExtra("confName", configsList.get(position).getConfName());
-                intent.putExtra("ownerId", configsList.get(position).getOwnerId());
-                intent.putExtra("ownerMail", configsList.get(position).getOwnerMail());
-                intent.putExtra("orgConfName", configsList.get(position).getOrgConfName());
-                intent.putExtra("serverIp", configsList.get(position).getServerIp());
+                int originalPosition = searchableAdapter.originalPosition(position);
+
+                intent.putExtra("confName", configsList.get(originalPosition).getConfName());
+                intent.putExtra("ownerId", configsList.get(originalPosition).getOwnerId());
+                intent.putExtra("ownerMail", configsList.get(originalPosition).getOwnerMail());
+                intent.putExtra("orgConfName", configsList.get(originalPosition).getOrgConfName());
+                intent.putExtra("serverIp", configsList.get(originalPosition).getServerIp());
                 intent.putExtra("darkMode", darkMode);
 
                 startActivity(intent);

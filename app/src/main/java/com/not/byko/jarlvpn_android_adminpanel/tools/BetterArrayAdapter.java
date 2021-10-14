@@ -9,27 +9,19 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.not.byko.jarlvpn_android_adminpanel.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvoiceAdapter extends BaseAdapter implements Filterable {
+//Custom array adapter with title and description
+public class BetterArrayAdapter extends BaseAdapter implements Filterable {
     private List<String> originalData = null;
     private List<String>filteredData = null;
-    private List<String> descriptionToData = null;
-    private List<Boolean> paid = null;
-    private View view;
     private LayoutInflater mInflater;
-    private InvoiceAdapter.ItemFilter mFilter = new InvoiceAdapter.ItemFilter();
+    private ItemFilter mFilter = new ItemFilter();
 
-    public InvoiceAdapter(Context context, List<String> data, List<String> descriptionToData,
-                          List<Boolean> paid, View view) {
+    public BetterArrayAdapter(Context context, List<String> data) {
         this.filteredData = data ;
         this.originalData = data ;
-        this.descriptionToData = descriptionToData;
-        this.paid = paid;
-        this.view = view;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -50,15 +42,9 @@ public class InvoiceAdapter extends BaseAdapter implements Filterable {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = mInflater.inflate(android.R.layout.simple_list_item_2, null, true);
+        View rowView = mInflater.inflate(android.R.layout.simple_list_item_1, null, true);
         TextView titleView = rowView.findViewById(android.R.id.text1);
-        TextView descriptionView = rowView.findViewById(android.R.id.text2);
-
         titleView.setText(filteredData.get(position));
-        descriptionView.setText(descriptionToData.get(position));
-
-        if(paid.get(position)) titleView.setTextColor(view.getResources().getColor(R.color.green));
-        else titleView.setTextColor(view.getResources().getColor(R.color.red));
 
         return rowView;
     }
@@ -104,3 +90,4 @@ public class InvoiceAdapter extends BaseAdapter implements Filterable {
 
     }
 }
+

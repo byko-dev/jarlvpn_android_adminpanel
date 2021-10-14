@@ -74,13 +74,16 @@ public class InvoicesCryptoFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getActivity(), InvoiceActivity.class);
-                intent.putExtra("ownersMail", allCryptoInvoicesList.get(position).getOwnerMail());
-                intent.putExtra("transactionId", allCryptoInvoicesList.get(position).getIdTransaction());
-                intent.putExtra("paidInvoice", allCryptoInvoicesList.get(position).isPaid());
-                intent.putExtra("cryptocurrency", allCryptoInvoicesList.get(position).getCryptocurrency());
-                intent.putExtra("purchaseDate", allCryptoInvoicesList.get(position).getPurchaseDate());
-                intent.putExtra("subType", allCryptoInvoicesList.get(position).getSubType());
-                intent.putExtra("price", allCryptoInvoicesList.get(position).getPrice());
+
+                int originalPosition = searchableAdapter.originalPosition(position);
+
+                intent.putExtra("ownersMail", allCryptoInvoicesList.get(originalPosition).getOwnerMail());
+                intent.putExtra("transactionId", allCryptoInvoicesList.get(originalPosition).getIdTransaction());
+                intent.putExtra("paidInvoice", allCryptoInvoicesList.get(originalPosition).isPaid());
+                intent.putExtra("cryptocurrency", allCryptoInvoicesList.get(originalPosition).getCryptocurrency());
+                intent.putExtra("purchaseDate", allCryptoInvoicesList.get(originalPosition).getPurchaseDate());
+                intent.putExtra("subType", allCryptoInvoicesList.get(originalPosition).getSubType());
+                intent.putExtra("price", allCryptoInvoicesList.get(originalPosition).getPrice());
                 intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }

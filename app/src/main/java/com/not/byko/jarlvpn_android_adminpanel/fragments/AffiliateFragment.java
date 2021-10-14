@@ -19,13 +19,14 @@ import android.widget.ListView;
 import com.not.byko.jarlvpn_android_adminpanel.AffiliateActivity;
 import com.not.byko.jarlvpn_android_adminpanel.InvoiceActivity;
 import com.not.byko.jarlvpn_android_adminpanel.R;
+import com.not.byko.jarlvpn_android_adminpanel.tools.BetterArrayAdapter;
 import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 
 import java.util.List;
 
 public class AffiliateFragment extends Fragment {
 
-    private ArrayAdapter<String> arrayAdapter;
+    private BetterArrayAdapter arrayAdapter;
     private boolean darkMode;
 
     @Nullable
@@ -55,7 +56,7 @@ public class AffiliateFragment extends Fragment {
         List<String> affiliatePartnersList = webController.getAffiliates(getView());
 
         ListView listView = getView().findViewById(R.id.affiliate_listView);
-        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, affiliatePartnersList);
+        arrayAdapter = new BetterArrayAdapter(getActivity(), affiliatePartnersList);
         listView.setAdapter(arrayAdapter);
 
 
@@ -63,7 +64,8 @@ public class AffiliateFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getActivity(), AffiliateActivity.class);
-                intent.putExtra("username", affiliatePartnersList.get(position));
+                intent.putExtra("username",
+                        affiliatePartnersList.get(arrayAdapter.originalPosition(position)));
                 intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
             }

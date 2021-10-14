@@ -75,13 +75,15 @@ public class PromoCodesFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), PromoCodeActivity.class);
 
-                intent.putExtra("code", discountCodeList.get(position).getCode());
-                intent.putExtra("percentage", String.valueOf(discountCodeList.get(position).getPercentage()));
-                intent.putExtra("id", discountCodeList.get(position).getId());
-                intent.putExtra("ownerId", discountCodeList.get(position).getOwnerId());
-                intent.putExtra("usedTimes", String.valueOf(discountCodeList.get(position).getUsedTimes()));
-                intent.putExtra("plan", discountCodeList.get(position).getPlan());
-                intent.putExtra("billing", translateBillingCode(discountCodeList.get(position).getBilling()));
+                int originalPosition = searchableAdapter.originalPosition(position);
+
+                intent.putExtra("code", discountCodeList.get(originalPosition).getCode());
+                intent.putExtra("percentage", String.valueOf(discountCodeList.get(originalPosition).getPercentage()));
+                intent.putExtra("id", discountCodeList.get(originalPosition).getId());
+                intent.putExtra("ownerId", discountCodeList.get(originalPosition).getOwnerId());
+                intent.putExtra("usedTimes", String.valueOf(discountCodeList.get(originalPosition).getUsedTimes()));
+                intent.putExtra("plan", discountCodeList.get(originalPosition).getPlan());
+                intent.putExtra("billing", translateBillingCode(discountCodeList.get(originalPosition).getBilling()));
                 intent.putExtra("darkMode", darkMode);
 
                 startActivity(intent);

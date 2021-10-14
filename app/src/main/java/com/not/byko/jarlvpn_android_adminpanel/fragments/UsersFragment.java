@@ -18,6 +18,7 @@ import android.widget.ListView;
 
 import com.not.byko.jarlvpn_android_adminpanel.R;
 import com.not.byko.jarlvpn_android_adminpanel.UserActivity;
+import com.not.byko.jarlvpn_android_adminpanel.tools.BetterArrayAdapter;
 import com.not.byko.jarlvpn_android_adminpanel.tools.WebController;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class UsersFragment extends Fragment {
 
-    private ArrayAdapter<String> arrayAdapter;
+    private BetterArrayAdapter arrayAdapter;
     private boolean darkMode;
 
     @Nullable
@@ -54,7 +55,7 @@ public class UsersFragment extends Fragment {
 
         List<String> list = webController.getUsersList(getView());
 
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+        arrayAdapter = new BetterArrayAdapter(getActivity(), list);
 
         ListView listView = getView().findViewById(R.id.details_listView);
 
@@ -64,7 +65,7 @@ public class UsersFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(view.getContext(), UserActivity.class);
-                intent.putExtra("username", list.get(position));
+                intent.putExtra("username", list.get(arrayAdapter.originalPosition(position)));
                 intent.putExtra("darkMode", darkMode);
 
                 startActivity(intent);

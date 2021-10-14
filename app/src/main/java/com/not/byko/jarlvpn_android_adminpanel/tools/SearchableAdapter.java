@@ -35,6 +35,10 @@ public class SearchableAdapter extends BaseAdapter implements Filterable {
         return filteredData.get(position);
     }
 
+    public int originalPosition(int newPosition){
+        return originalData.indexOf(filteredData.get(newPosition));
+    }
+
     public long getItemId(int position) {
         return position;
     }

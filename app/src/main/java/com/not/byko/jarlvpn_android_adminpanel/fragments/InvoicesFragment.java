@@ -78,12 +78,15 @@ public class InvoicesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getActivity(), InvoiceActivity.class);
-                intent.putExtra("ownersMail", allPaypalInvoicesList.get(position).getOwnerMail());
-                intent.putExtra("transactionId", allPaypalInvoicesList.get(position).getPaymentId());
-                intent.putExtra("paidInvoice", allPaypalInvoicesList.get(position).isPaid());
-                intent.putExtra("purchaseDate", allPaypalInvoicesList.get(position).getPurchaseDate());
-                intent.putExtra("subType", allPaypalInvoicesList.get(position).getSubType());
-                intent.putExtra("price", allPaypalInvoicesList.get(position).getPrice());
+
+                int originalPosition = searchableAdapter.originalPosition(position);
+
+                intent.putExtra("ownersMail", allPaypalInvoicesList.get(originalPosition).getOwnerMail());
+                intent.putExtra("transactionId", allPaypalInvoicesList.get(originalPosition).getPaymentId());
+                intent.putExtra("paidInvoice", allPaypalInvoicesList.get(originalPosition).isPaid());
+                intent.putExtra("purchaseDate", allPaypalInvoicesList.get(originalPosition).getPurchaseDate());
+                intent.putExtra("subType", allPaypalInvoicesList.get(originalPosition).getSubType());
+                intent.putExtra("price", allPaypalInvoicesList.get(originalPosition).getPrice());
                 intent.putExtra("cryptocurrency", "");
                 intent.putExtra("darkMode", darkMode);
                 startActivity(intent);
